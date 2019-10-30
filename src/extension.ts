@@ -121,11 +121,10 @@ function get_tmpl(editor:any, config:any, type:string="header"):string{
 }
 
 
-// 插入头部
-function write_header(editor:any, config:any, path:string):void{
-	let tmpl:any = vscode.Uri.file(path);
+// Write Header
+function write_header(editor:any, config:any):void{
 
-	vscode.workspace.fs.readFile(tmpl).then(s => {
+	vscode.workspace.fs.readFile(vscode.Uri.file(get_tmpl(editor, config))).then(s => {
 
 		let date:string = dateFormat(new Date(), config.dateformat);
 					
@@ -150,17 +149,17 @@ function write_body(editor:any, config:any):void{
 
 	let linecount:number = editor.document.lineCount;
 
-	if(linecount <= 1){
-		vscode.workspace.fs.readFile(vscode.Uri.file(get_tmpl(editor, config, "body"))).then(s => {
-			editor.edit(function(editobj:any){
-				editobj.insert(new vscode.Position(linecount + 2, 0));
-			});
+	vscode.workspace.fs.readFile(vscode.Uri.file(get_tmpl(editor, config, "body"))).then(s => {
+		editor.edit(function(editobj:any){
+			editobj.insert(new vscode.Position(linecount, 0), "\r\n\r\n" + s.toString() + "\r\n");
 		});
-	}
+	});
+
+	editor.document.save();
 }
 
 
-// 更新头部
+// Update Header
 function update_header(editor:any, config:any):void{
 	editor.edit(function(editobj:any){
 
@@ -180,6 +179,31 @@ function update_header(editor:any, config:any):void{
 }
 
 
+// Write Header or Body
+function write_header_body():void{
+	let config:any = vscode.workspace.getConfiguration("fileheader");
+
+	let editor:any = vscode.window.activeTextEditor;
+	// let line:number = editor.selection.active.line;
+
+	let document:any = editor.document;
+
+	if(is_header(editor)){
+		update_header(editor, config);
+	}else if(editor.document.lineCount <= 1){
+		if(config.body){
+			write_body(editor, config);
+		}
+
+		write_header(editor, config);
+	}else{
+		write_header(editor, config);
+	}
+
+	editor.document.save();
+}
+
+
 // this method is called when your extension is activated
 // your extension is activated the very first time the command is executed
 export function activate(context: vscode.ExtensionContext) {
@@ -194,45 +218,19 @@ export function activate(context: vscode.ExtensionContext) {
 	let disposable = vscode.commands.registerCommand('extension.fileheader', () => {
 		// The code you place here will be executed every time your command is executed
 
-		// Display a message box to the user
+		write_header_body();
 	
-		vscode.window.showInformationMessage('Hello World!', "a,b,c", "zz");
-		vscode.window.showErrorMessage("Error", "Button1", "Button2");
-		// var ss = vscode.window.activeTextEditor.document.fileName;
-		// vscode.window.showInformationMessage(ss);
 	});
 
 	context.subscriptions.push(disposable);
 
 	vscode.workspace.onWillSaveTextDocument(e => {
-		// 读取配置文件
-		let config:any = vscode.workspace.getConfiguration("fileheader");
-
-		// 获取激活窗口
-		// vscode.e;
-		let editor:any = vscode.window.activeTextEditor;
-		// let line:number = editor.selection.active.line;
-
-		let document:any = editor.document;
-
-		if(is_header(editor)){
-			update_header(editor, config);
-		}else{
-			write_header(editor, config, get_tmpl(editor, config));
-		}
-
-		editor.document.save();
+		write_header_body();
 		// console.log(process.cwd());
 	});
 
 	vscode.workspace.onDidOpenTextDocument(e => {
-		let config:any = vscode.workspace.getConfiguration("fileheader");
-		let editor:any = vscode.window.activeTextEditor;
-
-		if (editor.document.lineCount <= 1){
-			write_body(editor, config);
-			write_header(editor, config, get_tmpl(editor, config));
-		}
+		write_header_body();
 	});
 }
 

@@ -17,7 +17,7 @@
 	"contributes": {
 		"configuration":{
 			"type": "object",
-			"title": "File Header Configuration",
+			"title": "File Header",
 			"properties": {
 				"fileheader.author": {
 					"type": "string",
@@ -29,9 +29,14 @@
 					"default": "YYYY-mm-dd HH:MM:SS",
 					"description": "DateTime Format"
 				},
+				"fileheader.body": {
+					"type": "boolean",
+					"default": false,
+					"description": "Write Body Template"
+				},
 				"fileheader.custom_template_path": {
 					"type": "string",
-					"default": "home/jankincai/source/vscodefileheader/src/template/",
+					"default": "",
 					"description": "Custom template path"
 				},
 				"fileheader.custom_template_header_path": {
