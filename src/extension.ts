@@ -3,6 +3,8 @@
 import * as vscode from 'vscode';
 import { SSL_OP_ALL } from 'constants';
 import { URL } from 'url';
+import * as fs from 'fs';
+import * as moment from 'moment';
 
 var template = require("art-template");
 var path = require("path");
@@ -11,6 +13,7 @@ var path = require("path");
 const header_max_line:number = 10;
 
 
+// Suffix ---> Template name
 const file_suffix_mapping:any = {
     ".as": "ActionScript",
     ".scpt": "AppleScript",
@@ -43,7 +46,7 @@ const file_suffix_mapping:any = {
     ".pl": "Perl",
     ".php": "PHP",
     ".py": "Python",
-    ".R": "R",
+    ".r": "R",
     ".rst": "RestructuredText",
     ".rb": "Ruby",
     ".scala": "Scala",
@@ -52,40 +55,25 @@ const file_suffix_mapping:any = {
     ".sql": "SQL",
     ".tcl": "TCL",
     ".txt": "Text",
-    ".xml": "XML"
+	".xml": "XML",
+	".yml": "YAML",
+	".yaml": "YAML"
 };
 
 
+// Get Suffix
 function get_suffix(obj: any):string{
-	return obj.fileName.substr(obj.fileName.lastIndexOf("."));
+	return obj.fileName.substr(obj.fileName.lastIndexOf(".")).toLowerCase();
 }
 
 
-function dateFormat(date:any, fmt:string):string{
-	let ret:any;
-
-    let opt:any = {
-		"y+": date.getYear(),                       // 年
-        "Y+": date.getFullYear().toString(),        // 年
-        "m+": (date.getMonth() + 1).toString(),     // 月
-        "d+": date.getDate().toString(),            // 日
-        "H+": date.getHours().toString(),           // 时
-        "M+": date.getMinutes().toString(),         // 分
-        "S+": date.getSeconds().toString()          // 秒
-        // 有其他格式化字符需求可以继续添加，必须转化成字符串
-    };
-    for (let k in opt) {
-        ret = new RegExp("(" + k + ")").exec(fmt);
-        if (ret) {
-            fmt = fmt.replace(ret[1], (ret[1].length === 1) ? (opt[k]) : (opt[k].padStart(ret[1].length, "0")));
-        }
-	}
-
-    return fmt;
+// Get Time
+function get_datetime(fmt:any="YYYY-MM-DD HH:mm:ss"):string{
+	return moment().format(fmt);
 }
 
 
-// 获取行号
+// Get line
 function get_line(editor:any, str:string):number{
 	// "Last Modified time"
 	let document = editor.document;
@@ -101,7 +89,7 @@ function get_line(editor:any, str:string):number{
 }
 
 
-// 判断头部是否存在
+// Judge if the head exists
 function is_header(editor:any):boolean{
 	let text:string = editor.document.getText(0, 0, header_max_line + 1, 0);
 
@@ -112,12 +100,21 @@ function is_header(editor:any):boolean{
 }
 
 
-// 获取模板
+// Get Template
 function get_tmpl(editor:any, config:any, type:string="header"):string{
 	let suffix:string = get_suffix(editor.document);
 	let tmpl:string = (config.file_suffix_mapping[suffix] || file_suffix_mapping[suffix]) + ".tmpl";
+	let tmpl_path:string = config.custom_template_path || path.join(process.cwd(), ".vscode/extensions/", "vscodefileheader/src/template/");
 
-	return path.join(config.custom_template_path, type, tmpl);
+	tmpl_path = path.join(tmpl_path, type, tmpl);
+
+	fs.exists(tmpl_path, (exists) => {
+		if(!exists){
+			vscode.window.showWarningMessage("FileHeader template not found.");
+		}
+	});
+
+	return tmpl_path;
 }
 
 
@@ -126,7 +123,7 @@ function write_header(editor:any, config:any):void{
 
 	vscode.workspace.fs.readFile(vscode.Uri.file(get_tmpl(editor, config))).then(s => {
 
-		let date:string = dateFormat(new Date(), config.dateformat);
+		let date:string = get_datetime();
 					
 		let ret:string = template.render(s.toString(), {
 			author: config.author,
@@ -163,7 +160,7 @@ function write_body(editor:any, config:any):void{
 function update_header(editor:any, config:any):void{
 	editor.edit(function(editobj:any){
 
-		let date:string = dateFormat(new Date(), config.dateformat);
+		let date:string = get_datetime();
 		let line:number = get_line(editor, "@Last Modified time:");
 		let start:number = editor.document.lineAt(line).text.indexOf(":") + 1;
 
@@ -180,7 +177,7 @@ function update_header(editor:any, config:any):void{
 
 
 // Write Header or Body
-function write_header_body():void{
+function write_header_body(flags:boolean=true):void{
 	let config:any = vscode.workspace.getConfiguration("fileheader");
 
 	let editor:any = vscode.window.activeTextEditor;
@@ -189,18 +186,21 @@ function write_header_body():void{
 	let document:any = editor.document;
 
 	if(is_header(editor)){
-		update_header(editor, config);
+		if(flags){
+			update_header(editor, config);
+		}
 	}else if(editor.document.lineCount <= 1){
 		if(config.body){
 			write_body(editor, config);
 		}
-
-		write_header(editor, config);
+		setTimeout(() => {
+			write_header(editor, config);
+		}, 200);
 	}else{
 		write_header(editor, config);
 	}
 
-	editor.document.save();
+	// editor.document.save();
 }
 
 
@@ -230,7 +230,7 @@ export function activate(context: vscode.ExtensionContext) {
 	});
 
 	vscode.workspace.onDidOpenTextDocument(e => {
-		write_header_body();
+		write_header_body(false);
 	});
 }
 

@@ -15,7 +15,7 @@
 	],
 	"main": "./out/extension.js",
 	"contributes": {
-		"configuration":{
+		"configuration": {
 			"type": "object",
 			"title": "File Header",
 			"properties": {
@@ -26,7 +26,7 @@
 				},
 				"fileheader.dateformat": {
 					"type": "string",
-					"default": "YYYY-mm-dd HH:MM:SS",
+					"default": "YYYY-MM-DD HH:mm:ss",
 					"description": "DateTime Format"
 				},
 				"fileheader.body": {
@@ -39,20 +39,9 @@
 					"default": "",
 					"description": "Custom template path"
 				},
-				"fileheader.custom_template_header_path": {
-					"type": "string",
-					"default": "",
-					"description": "Custom template header path"
-				},
-				"fileheader.custom_template_body_path": {
-					"type": "string",
-					"default": "",
-					"description": "Custom template body path"
-				},
 				"fileheader.file_suffix_mapping": {
-					"type":"object",
-					"default": {
-					},
+					"type": "object",
+					"default": {},
 					"description": "File suffix mapping"
 				}
 			}
@@ -83,6 +72,7 @@
 		"vscode-test": "^1.2.0"
 	},
 	"dependencies": {
-		"art-template": "^4.13.2"
+		"art-template": "^4.13.2",
+		"moment": "^2.24.0"
 	}
 }
