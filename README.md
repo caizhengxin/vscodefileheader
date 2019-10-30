@@ -78,9 +78,9 @@ Python
 
 * Set date foramt
 
-```json
+```python
 {
-    "fileheader.dateformat": "YYYY-MM-DD HH:mm:ss"  // moment.js
+    "fileheader.dateformat": "YYYY-MM-DD HH:mm:ss"  # moment.js
 }
 ```
 
