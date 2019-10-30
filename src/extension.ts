@@ -5,9 +5,55 @@ import { SSL_OP_ALL } from 'constants';
 import { URL } from 'url';
 
 var template = require("art-template");
+var path = require("path");
 
 
 const header_max_line:number = 10;
+
+
+const file_suffix_mapping:any = {
+    ".as": "ActionScript",
+    ".scpt": "AppleScript",
+    ".asp": "ASP",
+    ".aspx": "ASP",
+    ".bat": "Batch File",
+    ".cmd": "Batch File",
+    ".c": "C",
+    ".cs": "C#",
+    ".cpp": "C++",
+    ".clj": "Clojure",
+    ".css": "CSS",
+    ".D": "D",
+    ".erl": "Erlang",
+    ".go": "Go",
+    ".groovy": "Groovy",
+    ".hs": "Haskell",
+    ".htm": "HTML",
+    ".html": "HTML",
+    ".java": "Java",
+    ".js": "JavaScript",
+    ".tex": "LaTeX",
+    ".lsp": "Lisp",
+    ".lua": "Lua",
+    ".md": "Markdown",
+    ".mat": "Matlab",
+    ".m": "Objective-C",
+    ".ml": "OCaml",
+    ".p": "Pascal",
+    ".pl": "Perl",
+    ".php": "PHP",
+    ".py": "Python",
+    ".R": "R",
+    ".rst": "RestructuredText",
+    ".rb": "Ruby",
+    ".scala": "Scala",
+    ".scss": "SCSS",
+    ".sh": "ShellScript",
+    ".sql": "SQL",
+    ".tcl": "TCL",
+    ".txt": "Text",
+    ".xml": "XML"
+};
 
 
 function get_suffix(obj: any):string{
@@ -66,6 +112,15 @@ function is_header(editor:any):boolean{
 }
 
 
+// 获取模板
+function get_tmpl(editor:any, config:any, type:string="header"):string{
+	let suffix:string = get_suffix(editor.document);
+	let tmpl:string = (config.file_suffix_mapping[suffix] || file_suffix_mapping[suffix]) + ".tmpl";
+
+	return path.join(config.custom_template_path, type, tmpl);
+}
+
+
 // 插入头部
 function write_header(editor:any, config:any, path:string):void{
 	let tmpl:any = vscode.Uri.file(path);
@@ -83,9 +138,25 @@ function write_header(editor:any, config:any, path:string):void{
 		
 		editor.edit(function(editobj:any){
 			editobj.insert(new vscode.Position(0, 0), ret);
-
 		});
+
+		editor.document.save();
 	});
+}
+
+
+// Write Body
+function write_body(editor:any, config:any):void{
+
+	let linecount:number = editor.document.lineCount;
+
+	if(linecount <= 1){
+		vscode.workspace.fs.readFile(vscode.Uri.file(get_tmpl(editor, config, "body"))).then(s => {
+			editor.edit(function(editobj:any){
+				editobj.insert(new vscode.Position(linecount + 2, 0));
+			});
+		});
+	}
 }
 
 
@@ -138,21 +209,30 @@ export function activate(context: vscode.ExtensionContext) {
 		let config:any = vscode.workspace.getConfiguration("fileheader");
 
 		// 获取激活窗口
+		// vscode.e;
 		let editor:any = vscode.window.activeTextEditor;
 		// let line:number = editor.selection.active.line;
 
 		let document:any = editor.document;
-		// let lineCount:number = document.lineCount;
 
 		if(is_header(editor)){
 			update_header(editor, config);
 		}else{
-			let path:string = "home/jankincai/source/vscodefileheader/src/template/header/Python.tmpl";
-			write_header(editor, config, path);	
+			write_header(editor, config, get_tmpl(editor, config));
 		}
 
 		editor.document.save();
 		// console.log(process.cwd());
+	});
+
+	vscode.workspace.onDidOpenTextDocument(e => {
+		let config:any = vscode.workspace.getConfiguration("fileheader");
+		let editor:any = vscode.window.activeTextEditor;
+
+		if (editor.document.lineCount <= 1){
+			write_body(editor, config);
+			write_header(editor, config, get_tmpl(editor, config));
+		}
 	});
 }
 

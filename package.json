@@ -10,7 +10,7 @@
 		"Other"
 	],
 	"activationEvents": [
-		"onLanguage:python",
+		"*",
 		"onCommand:extension.fileheader"
 	],
 	"main": "./out/extension.js",
@@ -28,13 +28,34 @@
 					"type": "string",
 					"default": "YYYY-mm-dd HH:MM:SS",
 					"description": "DateTime Format"
+				},
+				"fileheader.custom_template_path": {
+					"type": "string",
+					"default": "home/jankincai/source/vscodefileheader/src/template/",
+					"description": "Custom template path"
+				},
+				"fileheader.custom_template_header_path": {
+					"type": "string",
+					"default": "",
+					"description": "Custom template header path"
+				},
+				"fileheader.custom_template_body_path": {
+					"type": "string",
+					"default": "",
+					"description": "Custom template body path"
+				},
+				"fileheader.file_suffix_mapping": {
+					"type":"object",
+					"default": {
+					},
+					"description": "File suffix mapping"
 				}
 			}
 		},
 		"commands": [
 			{
 				"command": "extension.fileheader",
-				"title": "Hello World"
+				"title": "File Header"
 			}
 		]
 	},
