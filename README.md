@@ -1,65 +1,112 @@
-# vscodefileheader README
+# VSCode FileHeader
 
-This is the README for your extension "vscodefileheader". After writing up a brief description, we recommend including the following sections.
+This is a header extension that contains multiple languages.
 
 ## Features
 
-Describe specific features of your extension including screenshots of your extension in action. Image paths are relative to this README file.
+Python
 
-For example if there is an image subfolder under your extension project workspace:
+![Python](images/python.png)
 
-\!\[feature X\]\(images/feature-x.png\)
+## Language
 
-> Tip: Many popular extensions utilize animations. This is an excellent way to show off your extension! We recommend short, focused animations that are easy to follow.
+* ActionScript
+* AppleScript
+* ASP
+* Batch
+* C
+* C#
+* C++
+* Clojire
+* CSS
+* D
+* Diff
+* Erlang
+* Go
+* Haskell
+* HTML
+* Java
+* JavaScript
+* LaTeX
+* Lisp
+* Lua
+* Matlab
+* Objective-C
+* OCaml
+* Pascal
+* Perl
+* PHP
+* Python
+* R
+* Ruby
+* Scala
+* SCSS
+* ShellScript
+* SQL
+* XML
+* YAML
 
 ## Requirements
 
-If you have any requirements or dependencies, add a section describing those and how to install and configure them.
-
 ## Extension Settings
 
-Include if your extension adds any VS Code settings through the `contributes.configuration` extension point.
+* Set author
 
-For example:
+```json
+{
+    "fileheader.author": "Your name"
+}
+```
 
-This extension contributes the following settings:
+* Set custom suffix name
 
-* `myExtension.enable`: enable/disable this extension
-* `myExtension.thing`: set to `blah` to do something
+```json
+{
+    "fileheader.file_suffix_mapping": {
+        ".pyx": "Python"
+    }
+}
+```
+
+* Set insert body switch
+
+```json
+{
+    "fileheader.body": true
+}
+```
+
+* Set date foramt
+
+```json
+{
+    "fileheader.dateformat": "YYYY-MM-DD HH:mm:ss"  // moment.js
+}
+```
+
+* Set custom template
+
+Create path
+
+```bash
+mkdir template
+cd template
+mkdir header
+vim Python.tmpl
+
+# -*- coding: utf-8 -*-
+# @Author: {{author}}
+# @Date:   {{create_time}}
+# @Last Modified by:   {{last_modified_by}}
+# @Last Modified time: {{last_modified_time}}
+```
+
+```json
+{
+    "fileheader.custom_template_path": "xxx/template/"
+}
+```
 
 ## Known Issues
 
-Calling out known issues can help limit users opening duplicate issues against your extension.
-
 ## Release Notes
-
-Users appreciate release notes as you update your extension.
-
-### 1.0.0
-
-Initial release of ...
-
-### 1.0.1
-
-Fixed issue #.
-
-### 1.1.0
-
-Added features X, Y, and Z.
-
------------------------------------------------------------------------------------------------------------
-
-## Working with Markdown
-
-**Note:** You can author your README using Visual Studio Code.  Here are some useful editor keyboard shortcuts:
-
-* Split the editor (`Cmd+\` on macOS or `Ctrl+\` on Windows and Linux)
-* Toggle preview (`Shift+CMD+V` on macOS or `Shift+Ctrl+V` on Windows and Linux)
-* Press `Ctrl+Space` (Windows, Linux) or `Cmd+Space` (macOS) to see a list of Markdown snippets
-
-### For more information
-
-* [Visual Studio Code's Markdown Support](http://code.visualstudio.com/docs/languages/markdown)
-* [Markdown Syntax Reference](https://help.github.com/articles/markdown-basics/)
-
-**Enjoy!**
