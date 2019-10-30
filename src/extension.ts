@@ -104,13 +104,14 @@ function is_header(editor:any):boolean{
 function get_tmpl(editor:any, config:any, type:string="header"):string{
 	let suffix:string = get_suffix(editor.document);
 	let tmpl:string = (config.file_suffix_mapping[suffix] || file_suffix_mapping[suffix]) + ".tmpl";
-	let tmpl_path:string = config.custom_template_path || path.join(process.cwd(), ".vscode/extensions/", "vscodefileheader/src/template/");
+	let tmpl_path:string = config.custom_template_path || path.join(path.dirname(__dirname), "template");
 
 	tmpl_path = path.join(tmpl_path, type, tmpl);
 
 	fs.exists(tmpl_path, (exists) => {
 		if(!exists){
-			vscode.window.showWarningMessage("FileHeader template not found.");
+			console.log(tmpl_path);
+			console.log("FileHeader template not found.");
 		}
 	});
 
@@ -226,7 +227,6 @@ export function activate(context: vscode.ExtensionContext) {
 
 	vscode.workspace.onWillSaveTextDocument(e => {
 		write_header_body();
-		// console.log(process.cwd());
 	});
 
 	vscode.workspace.onDidOpenTextDocument(e => {

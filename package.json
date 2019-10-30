@@ -3,11 +3,37 @@
 	"displayName": "VSCodeFileHeader",
 	"description": "header comment",
 	"version": "0.0.1",
+	"publisher": "jankincai",
+	"author": {
+		"name": "JanKinCai",
+		"email": "jankincai12@gmail.com",
+		"url": "https://github.com/caizhengxin/"
+	},
+	"homepage": "https://github.com/caizhengxin/vscodefileheader",
+	"license": "BSD",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/caizhengxin/vscodefileheader"
+	},
+	"bugs": {
+		"url": "https://github.com/caizhengxin/vscodefileheader/issues",
+		"email": "jankincai12@gmail.com"
+	},
+	"icon": "images/python.png",
 	"engines": {
 		"vscode": "^1.39.0"
 	},
 	"categories": [
 		"Other"
+	],
+	"keywors": [
+		"vscode-fileheader",
+		"vscodefileheader",
+		"fileheader",
+		"annotation",
+		"comment",
+		"vscode comment",
+		"vscode annotation"
 	],
 	"activationEvents": [
 		"*",

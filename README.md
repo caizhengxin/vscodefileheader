@@ -2,11 +2,17 @@
 
 This is a header extension that contains multiple languages.
 
+## Install
+
+```bash
+ext install jankincai.vscodefileheader
+```
+
 ## Features
 
 Python
 
-![Python](images/python.png)
+![Python](https://raw.githubusercontent.com/caizhengxin/vscodefileheader/develop/images/python.png)
 
 ## Language
 
