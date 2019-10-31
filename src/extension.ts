@@ -173,7 +173,7 @@ function write_body(editor:any, config:any):void{
 
 	open_tmpl(editor, config, "body", function(s:any){
 		editor.edit(function(editobj:any){
-			editobj.insert(new vscode.Position(linecount, 0), s.toString());
+			editobj.insert(new vscode.Position(linecount, 0), s.toString() + "\r\n");
 		});
 
 		editor.document.save();
