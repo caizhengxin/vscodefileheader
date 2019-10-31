@@ -78,9 +78,14 @@ function get_datetime(fmt:any="YYYY-MM-DD HH:mm:ss"):string{
 }
 
 
+// Get default template
+function get_default_template():string{
+	return  path.join(path.dirname(__dirname), "template");
+}
+
+
 // Get line
 function get_line(editor:any, str:string):number{
-	// "Last Modified time"
 	let document = editor.document;
 	let i:number = 0;
 
@@ -106,35 +111,36 @@ function is_header(editor:any):boolean{
 
 
 // Get Template
-function get_tmpl(editor:any, config:any, type:string="header"):string{
+function get_tmpl(editor:any, config:any, tmplpath:string="", type:string="header"):string{
 	let suffix:string = get_suffix(editor.document);
 	let tmpl:string = (config.file_suffix_mapping[suffix] || file_suffix_mapping[suffix]) + ".tmpl";
-	let tmpl_path:string = config.custom_template_path || path.join(path.dirname(__dirname), "template");
+	// var tmpl_path:string = config.custom_template_path || get_default_template();
 
-	tmpl_path = path.join(tmpl_path, type, tmpl);
-
-	fs.exists(tmpl_path, (exists) => {
-		if(!exists){
-			console.log(tmpl_path);
-			console.log("FileHeader template not found.");
-		}
-		tmpl_path = "";
-	});
-
-	return tmpl_path;
+	return path.join(tmplpath || config.custom_template_path , type, tmpl);
 }
 
 
 // Open Template
-function open_tmpl(tmpl_path:string, callback:any){
+function open_tmpl(editor:any, config:any, type:string="header", callback:any){
+	let tmpl_path:string = get_tmpl(editor, config, "", type);
+
 	fs.exists(tmpl_path, (exists) => {
 		if(exists){
 			vscode.workspace.fs.readFile(vscode.Uri.file(tmpl_path)).then(s => {
 				callback(s);
 			});	
 		}else{
-			console.log(tmpl_path);
-			console.log("FileHeader template not found.");
+			// 默认模板
+			tmpl_path = get_tmpl(editor, config, get_default_template(), type);
+			fs.exists(tmpl_path, (exists) => {
+				if(exists){
+					vscode.workspace.fs.readFile(vscode.Uri.file(tmpl_path)).then(s => {
+						callback(s);
+					});	
+				}else{
+					console.log("Not found fileheader template: " + tmpl_path);
+				}
+			});		
 		}
 	});
 }
@@ -142,7 +148,7 @@ function open_tmpl(tmpl_path:string, callback:any){
 
 // Write Header
 function write_header(editor:any, config:any):void{
-	open_tmpl(get_tmpl(editor, config), function(s:any){
+	open_tmpl(editor, config, "header", function(s:any){
 		let date:string = get_datetime();
 					
 		let ret:string = template.render(s.toString(), {
@@ -165,7 +171,7 @@ function write_header(editor:any, config:any):void{
 function write_body(editor:any, config:any):void{
 	let linecount:number = editor.document.lineCount;
 
-	open_tmpl(get_tmpl(editor, config, "body"), function(s:any){
+	open_tmpl(editor, config, "body", function(s:any){
 		editor.edit(function(editobj:any){
 			editobj.insert(new vscode.Position(linecount, 0), s.toString());
 		});
