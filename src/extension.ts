@@ -65,7 +65,10 @@ const file_suffix_mapping:any = {
 
 // Get Suffix
 function get_suffix(obj: any):string{
-	return obj.fileName.substr(obj.fileName.lastIndexOf(".")).toLowerCase();
+	let pathobj:any = path.parse(obj.fileName);
+
+	return pathobj.ext.toLowerCase() || pathobj.name.toLowerCase();
+	// return obj.fileName.substr(obj.fileName.lastIndexOf(".")).toLowerCase();
 }
 
 
@@ -115,17 +118,31 @@ function get_tmpl(editor:any, config:any, type:string="header"):string{
 			console.log(tmpl_path);
 			console.log("FileHeader template not found.");
 		}
+		tmpl_path = "";
 	});
 
 	return tmpl_path;
 }
 
 
+// Open Template
+function open_tmpl(tmpl_path:string, callback:any){
+	fs.exists(tmpl_path, (exists) => {
+		if(exists){
+			vscode.workspace.fs.readFile(vscode.Uri.file(tmpl_path)).then(s => {
+				callback(s);
+			});	
+		}else{
+			console.log(tmpl_path);
+			console.log("FileHeader template not found.");
+		}
+	});
+}
+
+
 // Write Header
 function write_header(editor:any, config:any):void{
-
-	vscode.workspace.fs.readFile(vscode.Uri.file(get_tmpl(editor, config))).then(s => {
-
+	open_tmpl(get_tmpl(editor, config), function(s:any){
 		let date:string = get_datetime();
 					
 		let ret:string = template.render(s.toString(), {
@@ -146,16 +163,15 @@ function write_header(editor:any, config:any):void{
 
 // Write Body
 function write_body(editor:any, config:any):void{
-
 	let linecount:number = editor.document.lineCount;
 
-	vscode.workspace.fs.readFile(vscode.Uri.file(get_tmpl(editor, config, "body"))).then(s => {
+	open_tmpl(get_tmpl(editor, config, "body"), function(s:any){
 		editor.edit(function(editobj:any){
 			editobj.insert(new vscode.Position(linecount, 0), s.toString());
 		});
-	});
 
-	editor.document.save();
+		editor.document.save();
+	});
 }
 
 
@@ -188,19 +204,19 @@ function write_header_body(flags:boolean=true):void{
 
 	let document:any = editor.document;
 
-	if(is_header(editor)){
-		if(flags){
-			update_header(editor, config);
-		}
-	}else if(editor.document.lineCount <= 1){
-		if(config.body){
-			write_body(editor, config);
-		}
-		setTimeout(() => {
+	if(config.ignore.indexOf(get_suffix(document)) === -1){
+		if(is_header(editor)){
+			if(flags){
+				update_header(editor, config);
+			}
+		}else if(editor.document.lineCount <= 1){
+			if(config.body){
+				write_body(editor, config);
+			}
 			write_header(editor, config);
-		}, 200);
-	}else{
-		write_header(editor, config);
+		}else{
+			write_header(editor, config);
+		}	
 	}
 
 	// editor.document.save();

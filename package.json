@@ -26,14 +26,17 @@
 	"categories": [
 		"Other"
 	],
-	"keywors": [
+	"keywords": [
 		"vscode-fileheader",
 		"vscodefileheader",
 		"fileheader",
 		"annotation",
 		"comment",
 		"vscode comment",
-		"vscode annotation"
+		"vscode annotation",
+		"header",
+		"body",
+		"language"
 	],
 	"activationEvents": [
 		"*",
@@ -59,6 +62,11 @@
 					"type": "boolean",
 					"default": false,
 					"description": "Write Body Template"
+				},
+				"fileheader.ignore": {
+					"type":"array",
+					"default": [],
+					"description": "Ignore suffix"
 				},
 				"fileheader.custom_template_path": {
 					"type": "string",

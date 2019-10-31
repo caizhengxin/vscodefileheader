@@ -1,6 +1,6 @@
 # VSCode FileHeader
 
-![install](https://vsmarketplacebadge.apphb.com/installs-short/jankincai.vscodefileheader.svg?style=flat-square)
+![Vscode](https://vsmarketplacebadge.apphb.com/version-short/jankincai.vscodefileheader.svg?style=flat-square) ![install](https://vsmarketplacebadge.apphb.com/installs-short/jankincai.vscodefileheader.svg?style=flat-square)
 
 This is a header extension that contains multiple languages.
 
@@ -12,9 +12,17 @@ ext install jankincai.vscodefileheader
 
 ## Features
 
-Python
+Python:
 
-![Python](https://raw.githubusercontent.com/caizhengxin/vscodefileheader/develop/images/python.png)
+![Python](images/python.png)
+
+Vue:
+
+![Vue](images/vue.png)
+
+XML:
+
+![XML](images/xml.png)
 
 ## Language
 
@@ -94,22 +102,42 @@ Python
 }
 ```
 
+* Set ignore
+
+```python
+{
+    "fileheader.ignore": [
+        ".txt",
+    ]
+}
+```
+
 * Set custom template
 
-Create path
-
 ```bash
+# Create dir
 mkdir template
 cd template
 mkdir header
-vim Python.tmpl
+mkdir body
+
+# Add Header template
+header/Python.tmpl
 
 # -*- coding: utf-8 -*-
 # @Author: {{author}}
 # @Date:   {{create_time}}
 # @Last Modified by:   {{last_modified_by}}
 # @Last Modified time: {{last_modified_time}}
+
+
+# Add Body template
+body/Python.tmpl
+
+print("Hello, World!")
 ```
+
+Set template path
 
 ```json
 {
