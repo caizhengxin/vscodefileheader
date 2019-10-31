@@ -12,17 +12,25 @@ ext install jankincai.vscodefileheader
 
 ## Features
 
+* Automatic update time and author
+* Custom template(header/body)
+* Support for multiple languages
+* Support for suffix name mapping templates
+* Support ignore filehader
+
+## Demo
+
 Python:
 
-![Python](https://raw.githubusercontent.com/caizhengxin/vscodefileheader/master/images/python.png)
+![Python](images/python.png)
 
 Vue:
 
-![Vue](https://raw.githubusercontent.com/caizhengxin/vscodefileheader/master/images/vue.png)
+![Vue](images/vue.png)
 
 XML:
 
-![XML](https://raw.githubusercontent.com/caizhengxin/vscodefileheader/master/images/xml.png)
+![XML](images/xml.png)
 
 ## Language
 
