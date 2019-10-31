@@ -54,7 +54,9 @@ const file_suffix_mapping:any = {
     ".sh": "ShellScript",
     ".sql": "SQL",
     ".tcl": "TCL",
-    ".txt": "Text",
+	".txt": "Text",
+	".ts": "TypeScript",
+	".vue": "Vue",
 	".xml": "XML",
 	".yml": "YAML",
 	".yaml": "YAML"
@@ -104,7 +106,7 @@ function is_header(editor:any):boolean{
 function get_tmpl(editor:any, config:any, type:string="header"):string{
 	let suffix:string = get_suffix(editor.document);
 	let tmpl:string = (config.file_suffix_mapping[suffix] || file_suffix_mapping[suffix]) + ".tmpl";
-	let tmpl_path:string = config.custom_template_path || path.join(path.dirname(__dirname), "out/template");
+	let tmpl_path:string = config.custom_template_path || path.join(path.dirname(__dirname), "template");
 
 	tmpl_path = path.join(tmpl_path, type, tmpl);
 
@@ -149,7 +151,7 @@ function write_body(editor:any, config:any):void{
 
 	vscode.workspace.fs.readFile(vscode.Uri.file(get_tmpl(editor, config, "body"))).then(s => {
 		editor.edit(function(editobj:any){
-			editobj.insert(new vscode.Position(linecount, 0), "\r\n\r\n" + s.toString() + "\r\n");
+			editobj.insert(new vscode.Position(linecount, 0), s.toString());
 		});
 	});
 

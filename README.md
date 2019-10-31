@@ -1,5 +1,7 @@
 # VSCode FileHeader
 
+![install](https://vsmarketplacebadge.apphb.com/installs-short/jankincai.vscodefileheader.svg?style=flat-square)
+
 This is a header extension that contains multiple languages.
 
 ## Install
@@ -49,6 +51,8 @@ Python
 * SCSS
 * ShellScript
 * SQL
+* TypeScript
+* Vue
 * XML
 * YAML
 
