@@ -14,15 +14,15 @@ ext install jankincai.vscodefileheader
 
 Python:
 
-![Python](images/python.png)
+![Python](https://raw.githubusercontent.com/caizhengxin/vscodefileheader/master/images/python.png)
 
 Vue:
 
-![Vue](images/vue.png)
+![Vue](https://raw.githubusercontent.com/caizhengxin/vscodefileheader/master/images/vue.png)
 
 XML:
 
-![XML](images/xml.png)
+![XML](https://raw.githubusercontent.com/caizhengxin/vscodefileheader/master/images/xml.png)
 
 ## Language
 
