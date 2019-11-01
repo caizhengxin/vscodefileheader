@@ -210,7 +210,9 @@ function write_header_body(flags:boolean=true):void{
 
 	let document:any = editor.document;
 
-	if(config.ignore.indexOf(get_suffix(document)) === -1){
+	let suffix:string = get_suffix(document);
+
+	if(suffix.indexOf(".tmpl") === -1 && config.ignore.indexOf(suffix) === -1){
 		if(is_header(editor)){
 			if(flags){
 				update_header(editor, config);
