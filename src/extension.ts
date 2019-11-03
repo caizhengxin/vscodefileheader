@@ -250,7 +250,9 @@ export function activate(context: vscode.ExtensionContext) {
 		let editor:any = vscode.window.activeTextEditor;
 
 
-		insert_header_body(editor, config);
+		if(!is_header(editor)){
+			insert_header_body(editor, config);
+		}
 	});
 
 	context.subscriptions.push(disposable);
@@ -279,7 +281,7 @@ export function activate(context: vscode.ExtensionContext) {
 		let editor:any = vscode.window.activeTextEditor;
 
 
-		if(config.open){
+		if(config.open && !is_header(editor)){
 			insert_header_body(editor, config);
 		}
 	});
