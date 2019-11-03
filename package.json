@@ -2,7 +2,7 @@
 	"name": "vscodefileheader",
 	"displayName": "VSCodeFileHeader",
 	"description": "header comment",
-	"version": "0.2.0",
+	"version": "0.2.1",
 	"publisher": "jankincai",
 	"author": {
 		"name": "JanKinCai",
