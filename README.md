@@ -17,6 +17,7 @@ ext install jankincai.vscodefileheader
 * Support for multiple languages
 * Support for suffix name mapping templates
 * Support for ignore sufixx
+* Support for manual and automatic insert comment
 
 ## Demo
 
@@ -116,6 +117,10 @@ XML:
 {
     "fileheader.save": true,
 }
+
+# Set false, Need to add comments manually
+
+Ctrl + ALT + i
 ```
 
 * Set date foramt
