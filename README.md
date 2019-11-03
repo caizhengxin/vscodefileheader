@@ -12,11 +12,11 @@ ext install jankincai.vscodefileheader
 
 ## Features
 
-* Automatic update time and author
-* Custom template(header/body)
+* Support for automatic update time and author
+* Support for custom template(header/body)
 * Support for multiple languages
 * Support for suffix name mapping templates
-* Support ignore filehader
+* Support for ignore sufixx
 
 ## Demo
 
@@ -102,6 +102,22 @@ XML:
 }
 ```
 
+* Set oepn file insert comment
+
+```python
+{
+    "fileheader.open": true,
+}
+```
+
+* Set save file insert comment, default ``true``
+
+```python
+{
+    "fileheader.save": true,
+}
+```
+
 * Set date foramt
 
 ```python
@@ -115,7 +131,9 @@ XML:
 ```python
 {
     "fileheader.ignore": [
-        ".txt",
+        "*.txt",
+        "test.py",
+        "test"
     ]
 }
 ```

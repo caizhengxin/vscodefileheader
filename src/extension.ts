@@ -6,6 +6,7 @@ import { URL } from 'url';
 import * as fs from 'fs';
 import * as moment from 'moment';
 
+
 var template = require("art-template");
 var path = require("path");
 
@@ -63,12 +64,40 @@ const file_suffix_mapping:any = {
 };
 
 
+// Get config
+function get_config():any{
+	return vscode.workspace.getConfiguration("fileheader");
+}
+
+
 // Get Suffix
 function get_suffix(obj: any):string{
 	let pathobj:any = path.parse(obj.fileName);
 
+	// console.log(pathobj);
+
 	return pathobj.ext.toLowerCase() || pathobj.name.toLowerCase();
 	// return obj.fileName.substr(obj.fileName.lastIndexOf(".")).toLowerCase();
+}
+
+
+// Get active dir
+function get_active_dir(editor:any):string{
+	let pathobj:any = path.parse(editor.document.fileName);
+
+	return pathobj.dir;
+}
+
+
+// Ignore
+function is_ignore(editor:any, ignore:any):boolean{
+	let pathobj:any = path.parse(editor.document.fileName);
+
+	if(ignore.indexOf(pathobj.dir) === -1 && pathobj.ext.indexOf(".tmpl") === -1 && ignore.indexOf("*" + pathobj.ext) === -1 && ignore.indexOf(pathobj.base) === -1){
+		return true;
+	}
+
+	return false;
 }
 
 
@@ -146,41 +175,6 @@ function open_tmpl(editor:any, config:any, type:string="header", callback:any){
 }
 
 
-// Write Header
-function write_header(editor:any, config:any):void{
-	open_tmpl(editor, config, "header", function(s:any){
-		let date:string = get_datetime();
-					
-		let ret:string = template.render(s.toString(), {
-			author: config.author,
-			create_time: date,
-			last_modified_by: config.author,
-			last_modified_time: date,
-		});
-		
-		editor.edit(function(editobj:any){
-			editobj.insert(new vscode.Position(0, 0), ret);
-		});
-
-		editor.document.save();
-	});
-}
-
-
-// Write Body
-function write_body(editor:any, config:any):void{
-	let linecount:number = editor.document.lineCount;
-
-	open_tmpl(editor, config, "body", function(s:any){
-		editor.edit(function(editobj:any){
-			editobj.insert(new vscode.Position(linecount, 0), s.toString() + "\r\n");
-		});
-
-		editor.document.save();
-	});
-}
-
-
 // Update Header
 function update_header(editor:any, config:any):void{
 	editor.edit(function(editobj:any){
@@ -201,33 +195,41 @@ function update_header(editor:any, config:any):void{
 }
 
 
-// Write Header or Body
-function write_header_body(flags:boolean=true):void{
-	let config:any = vscode.workspace.getConfiguration("fileheader");
+// Insert Header or Body
+function insert_header_body(editor:any, config:any):void{
+	let lineCount:number = editor.document.lineCount;
 
-	let editor:any = vscode.window.activeTextEditor;
-	// let line:number = editor.selection.active.line;
 
-	let document:any = editor.document;
+	if(is_ignore(editor, config.ignore)){
+		open_tmpl(editor, config, "header", function(s:any){
+			let date:string = get_datetime();
+						
+			let ret:any = template.render(s.toString(), {
+				author: config.author,
+				create_time: date,
+				last_modified_by: config.author,
+				last_modified_time: date,
+			});
 
-	let suffix:string = get_suffix(document);
 
-	if(suffix.indexOf(".tmpl") === -1 && config.ignore.indexOf(suffix) === -1){
-		if(is_header(editor)){
-			if(flags){
-				update_header(editor, config);
+			if(lineCount <= 1){
+				open_tmpl(editor, config, "body", function(s:any){
+					ret += s.toString() + "\r\n";
+
+					editor.edit(function(editobj:any){
+						editobj.insert(new vscode.Position(0, 0), ret);
+					});
+					editor.document.save();
+				});
+
+			}else{
+				editor.edit(function(editobj:any){
+					editobj.insert(new vscode.Position(0, 0), ret);
+				});
+				editor.document.save();					
 			}
-		}else if(editor.document.lineCount <= 1){
-			if(config.body){
-				write_body(editor, config);
-			}
-			write_header(editor, config);
-		}else{
-			write_header(editor, config);
-		}	
+		});	
 	}
-
-	// editor.document.save();
 }
 
 
@@ -244,19 +246,42 @@ export function activate(context: vscode.ExtensionContext) {
 	// The commandId parameter must match the command field in package.json
 	let disposable = vscode.commands.registerCommand('extension.fileheader', () => {
 		// The code you place here will be executed every time your command is executed
+		let config:any = get_config();
+		let editor:any = vscode.window.activeTextEditor;
 
-		write_header_body();
-	
+
+		insert_header_body(editor, config);
 	});
 
 	context.subscriptions.push(disposable);
 
+
+	// Save
 	vscode.workspace.onWillSaveTextDocument(e => {
-		write_header_body();
+		let config:any = get_config();
+		let editor:any = vscode.window.activeTextEditor;
+
+
+		// Update Header
+		if(is_header(editor)){
+			update_header(editor, config);
+		}else{
+			if(config.save){
+				insert_header_body(editor, config);
+			}	
+		}
 	});
 
+
+	// Open
 	vscode.workspace.onDidOpenTextDocument(e => {
-		write_header_body(false);
+		let config:any = get_config();
+		let editor:any = vscode.window.activeTextEditor;
+
+
+		if(config.open){
+			insert_header_body(editor, config);
+		}
 	});
 }
 

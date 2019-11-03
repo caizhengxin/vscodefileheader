@@ -56,17 +56,27 @@
 				"fileheader.dateformat": {
 					"type": "string",
 					"default": "YYYY-MM-DD HH:mm:ss",
-					"description": "DateTime Format"
+					"description": "Datetime format"
+				},
+				"fileheader.open": {
+					"type": "boolean",
+					"default": false,
+					"description": "Open file insert template"
+				},
+				"fileheader.save": {
+					"type": "boolean",
+					"default": true,
+					"description": "Save file insert template"
 				},
 				"fileheader.body": {
 					"type": "boolean",
 					"default": false,
-					"description": "Write Body Template"
+					"description": "Insert Body Template"
 				},
 				"fileheader.ignore": {
 					"type":"array",
 					"default": [],
-					"description": "Ignore suffix"
+					"description": "Ignore file"
 				},
 				"fileheader.custom_template_path": {
 					"type": "string",
@@ -85,7 +95,15 @@
 				"command": "extension.fileheader",
 				"title": "File Header"
 			}
-		]
+		],
+		"keybindings": [
+			{
+			  "command": "extension.fileheader",
+			  "key": "ctrl+alt+i",
+			  "mac": "ctrl+cmd+i",
+			  "when": "editorTextFocus"
+			}
+		]	
 	},
 	"scripts": {
 		"vscode:prepublish": "npm run compile",
