@@ -6,6 +6,10 @@ This is a header extension that contains multiple languages.
 
 ## Install
 
+Method one, ``ctrl + shift + x``, Search ``VSCodeFileHeader``
+
+Method two, ``ctrl + p``
+
 ```bash
 ext install jankincai.vscodefileheader
 ```
@@ -114,7 +118,7 @@ XML:
 }
 ```
 
-* Set oepn file insert comment
+* Set open file insert comment
 
 ```python
 {
