@@ -19,6 +19,17 @@ ext install jankincai.vscodefileheader
 * Support for ignore sufixx
 * Support for manual and automatic insert comment
 
+## Usage
+
+```python
+# Settings
+{
+    "fileheader.author": "JanKinCai",
+}
+
+# Save file or ``ctrl + alt + i`` insert comment
+```
+
 ## Demo
 
 Python:
@@ -120,7 +131,7 @@ XML:
 
 # Set false, Need to add comments manually
 
-Ctrl + ALT + i
+ctrl + alt + i
 ```
 
 * Set date foramt
