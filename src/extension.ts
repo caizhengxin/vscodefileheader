@@ -93,6 +93,7 @@ function get_active_dir(editor:any):string{
 function is_ignore(editor:any, ignore:any):boolean{
 	let pathobj:any = path.parse(editor.document.fileName);
 
+
 	if(ignore.indexOf(pathobj.dir) === -1 && pathobj.ext.indexOf(".tmpl") === -1 && ignore.indexOf("*" + pathobj.ext) === -1 && ignore.indexOf(pathobj.base) === -1){
 		return true;
 	}
@@ -167,6 +168,7 @@ function open_tmpl(editor:any, config:any, type:string="header", callback:any){
 						callback(s);
 					});	
 				}else{
+					callback("");
 					console.log("Not found fileheader template: " + tmpl_path);
 				}
 			});		
@@ -221,8 +223,8 @@ function insert_header_body(editor:any, config:any):void{
 					});
 					editor.document.save();
 				});
-
 			}else{
+				console.log(ret);
 				editor.edit(function(editobj:any){
 					editobj.insert(new vscode.Position(0, 0), ret);
 				});
