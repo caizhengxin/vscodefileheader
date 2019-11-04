@@ -94,11 +94,25 @@ function is_ignore(editor:any, ignore:any):boolean{
 	let pathobj:any = path.parse(editor.document.fileName);
 
 
-	if(ignore.indexOf(pathobj.dir) === -1 && pathobj.ext.indexOf(".tmpl") === -1 && ignore.indexOf("*" + pathobj.ext) === -1 && ignore.indexOf(pathobj.base) === -1){
-		return true;
+	// Ignore suffix
+	if(pathobj.ext.indexOf(".tmpl") !== -1 || ignore.indexOf("*" + pathobj.ext) !== -1 || ignore.indexOf(pathobj.ext) !== -1){
+		return false;
 	}
 
-	return false;
+	// Ignore file
+	if(ignore.indexOf(pathobj.base) !== -1){
+		return false;
+	}
+
+
+	// Ignore path
+	for(let v of ignore){
+		if(pathobj.dir.indexOf(v) !== -1){
+			return false;
+		}
+	}
+
+	return true;
 }
 
 
@@ -201,37 +215,34 @@ function update_header(editor:any, config:any):void{
 function insert_header_body(editor:any, config:any):void{
 	let lineCount:number = editor.document.lineCount;
 
-
-	if(is_ignore(editor, config.ignore)){
-		open_tmpl(editor, config, "header", function(s:any){
-			let date:string = get_datetime();
-						
-			let ret:any = template.render(s.toString(), {
-				author: config.author,
-				create_time: date,
-				last_modified_by: config.author,
-				last_modified_time: date,
-			});
+	open_tmpl(editor, config, "header", function(s:any){
+		let date:string = get_datetime();
+					
+		let ret:any = template.render(s.toString(), {
+			author: config.author,
+			create_time: date,
+			last_modified_by: config.author,
+			last_modified_time: date,
+		});
 
 
-			if(lineCount <= 1){
-				open_tmpl(editor, config, "body", function(s:any){
-					ret += s.toString() + "\r\n";
+		if(lineCount <= 1){
+			open_tmpl(editor, config, "body", function(s:any){
+				ret += s.toString() + "\r\n";
 
-					editor.edit(function(editobj:any){
-						editobj.insert(new vscode.Position(0, 0), ret);
-					});
-					editor.document.save();
-				});
-			}else{
-				console.log(ret);
 				editor.edit(function(editobj:any){
 					editobj.insert(new vscode.Position(0, 0), ret);
 				});
-				editor.document.save();					
-			}
-		});	
-	}
+				editor.document.save();
+			});
+		}else{
+			console.log(ret);
+			editor.edit(function(editobj:any){
+				editobj.insert(new vscode.Position(0, 0), ret);
+			});
+			editor.document.save();					
+		}
+	});	
 }
 
 
@@ -269,10 +280,8 @@ export function activate(context: vscode.ExtensionContext) {
 		// Update Header
 		if(is_header(editor)){
 			update_header(editor, config);
-		}else{
-			if(config.save){
-				insert_header_body(editor, config);
-			}	
+		}else if(config.save && is_ignore(editor, config.ignore)){
+			insert_header_body(editor, config);
 		}
 	});
 
@@ -282,8 +291,7 @@ export function activate(context: vscode.ExtensionContext) {
 		let config:any = get_config();
 		let editor:any = vscode.window.activeTextEditor;
 
-
-		if(config.open && !is_header(editor)){
+		if(config.open && !is_header(editor) && is_ignore(editor, config.ignore)){
 			insert_header_body(editor, config);
 		}
 	});

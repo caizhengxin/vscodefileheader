@@ -151,9 +151,9 @@ ctrl + alt + i
 ```python
 {
     "fileheader.ignore": [
-        "*.txt",
-        "test.py",
-        "test"
+        "*.txt",             # Ignore suffix name
+        "test.py",           # Ignore file
+        "test"               # Ignore path
     ]
 }
 ```
