@@ -6,9 +6,13 @@ This is a header extension that contains multiple languages.
 
 ## Install
 
-Method one, ``ctrl + shift + x``, Search ``VSCodeFileHeader``
+Method one:
 
-Method two, ``ctrl + p``
+``ctrl + shift + x``, Search ``VSCodeFileHeader``
+
+Method two:
+
+``ctrl + p``
 
 ```bash
 ext install jankincai.vscodefileheader
