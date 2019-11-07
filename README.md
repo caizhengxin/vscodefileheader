@@ -164,35 +164,67 @@ ctrl + alt + i
 
 * Set custom template
 
-```bash
-# Create dir
-mkdir template
-cd template
-mkdir header
-mkdir body
+> Add Header template
 
-# Add Header template
-header/Python.tmpl
+template/header/EditorConfig.tmpl
 
-# -*- coding: utf-8 -*-
+```conf
 # @Author: {{author}}
 # @Date:   {{create_time}}
 # @Last Modified by:   {{last_modified_by}}
 # @Last Modified time: {{last_modified_time}}
 
 
-# Add Body template
-body/Python.tmpl
-
-print("Hello, World!")
 ```
 
-Set template path
+> Add Body template
+
+template/body/EditorConfig.tmpl
+
+```conf
+# http://editorconfig.org
+
+root = true
+
+[*]
+charset = utf-8
+end_of_line = lf
+insert_final_newline = true
+trim_trailing_whitespace = true
+
+[*.{py,rst,ini}]
+indent_style = space
+indent_size = 4
+
+[*.{html,css,scss,json,yml}]
+indent_style = space
+indent_size = 2
+
+[*.md]
+trim_trailing_whitespace = false
+
+[Makefile]
+indent_style = tab
+
+[nginx.conf]
+indent_style = space
+indent_size = 2
+```
+
+> Set template path
 
 ```json
 {
     "fileheader.custom_template_path": "xxx/template/"
 }
+```
+
+> Set suffix mapping
+
+```json
+"fileheader.file_suffix_mapping": {
+    ".editorconfig": "EditorConfig"
+},
 ```
 
 ## Known Issues
