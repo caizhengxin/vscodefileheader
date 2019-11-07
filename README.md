@@ -4,6 +4,9 @@
 
 This is a header extension that contains multiple languages.
 
+* Usage [cookiecutter-vscode](https://github.com/caizhengxin/cookiecutter-vscode) create project.
+* [FileHeader Extension template](https://github.com/caizhengxin/fileheader-template)
+
 ## Install
 
 Method one:
@@ -226,6 +229,8 @@ indent_size = 2
     ".editorconfig": "EditorConfig"
 },
 ```
+
+* [FileHeader Extension template](https://github.com/caizhengxin/fileheader-template)
 
 ## Known Issues
 
