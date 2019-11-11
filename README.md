@@ -45,15 +45,15 @@ ext install jankincai.vscodefileheader
 
 Python:
 
-![Python](images/python.png)
+![Python](images/python.gif)
 
 Vue:
 
-![Vue](images/vue.png)
+![Vue](images/vue.gif)
 
 XML:
 
-![XML](images/xml.png)
+![XML](images/xml.gif)
 
 ## Language
 
