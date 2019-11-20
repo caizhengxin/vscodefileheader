@@ -25,3 +25,8 @@ Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how 
 - Add custom template(header/body)
 - Add suffix name mapping templates
 - Add ignore suffix
+
+[unreleased]: https://github.com/caizhengxin/vscodefileheader/compare/v0.2.6...HEAD
+[0.2.6]: https://github.com/caizhengxin/vscodefileheader/compare/v0.2.3...v0.2.6
+[0.2.0]: https://github.com/caizhengxin/vscodefileheader/compare/v0.1.8...v0.2.1
+[0.1.0]: https://github.com/caizhengxin/vscodefileheader/compare/v0.0.2...v0.1.5
