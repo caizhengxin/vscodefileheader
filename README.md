@@ -1,6 +1,6 @@
 # VSCode FileHeader
 
-![Vscode](https://vsmarketplacebadge.apphb.com/version-short/jankincai.vscodefileheader.svg?style=flat-square) ![install](https://vsmarketplacebadge.apphb.com/installs-short/jankincai.vscodefileheader.svg?style=flat-square)
+[![Markeetplace Badge][marketplace-badge]][marketplace] [![Install][install-badge]][marketplace] ![Size][size-badge] [![BSD License Badge][license-badge]][license]
 
 This is a header extension that contains multiple languages.
 
@@ -239,3 +239,10 @@ indent_size = 2
 ## Known Issues
 
 ## Release Notes
+
+[marketplace]: https://marketplace.visualstudio.com/items?itemName=jankincai.vscodefileheader#review-details
+[marketplace-badge]: https://vsmarketplacebadge.apphb.com/version-short/jankincai.vscodefileheader.svg?style=flat-square
+[install-badge]: https://vsmarketplacebadge.apphb.com/installs-short/jankincai.vscodefileheader.svg?style=flat-square
+[size-badge]: https://img.shields.io/github/languages/code-size/caizhengxin/vscodefileheader
+[license]: ./LLICENSE
+[license-badge]: https://img.shields.io/badge/license-BSD-blue.svg
