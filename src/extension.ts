@@ -81,6 +81,12 @@ function get_suffix(obj: any):string{
 }
 
 
+// Get file name
+function get_file_name(editor:any):string{
+	return path.parse(editor.document.fileName).name.toLowerCase();
+}
+
+
 // Get active dir
 function get_active_dir(editor:any):string{
 	let pathobj:any = path.parse(editor.document.fileName);
@@ -157,7 +163,9 @@ function is_header(editor:any):boolean{
 // Get Template
 function get_tmpl(editor:any, config:any, tmplpath:string="", type:string="header"):string{
 	let suffix:string = get_suffix(editor.document);
-	let tmpl:string = (config.file_suffix_mapping[suffix] || file_suffix_mapping[suffix]) + ".tmpl";
+	let name:string = get_file_name(editor);
+
+	let tmpl:string = (config.file_suffix_mapping[name + suffix] || config.file_suffix_mapping[suffix] || file_suffix_mapping[suffix]) + ".tmpl";
 	// var tmpl_path:string = config.custom_template_path || get_default_template();
 
 	return path.join(tmplpath || config.custom_template_path , type, tmpl);
