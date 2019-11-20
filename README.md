@@ -27,7 +27,7 @@ ext install jankincai.vscodefileheader
 * Support for custom template(header/body)
 * Support for multiple languages
 * Support for suffix name mapping templates
-* Support for ignore sufixx
+* Support for ignore suffix
 * Support for manual and automatic insert comment
 
 ## Usage

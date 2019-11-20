@@ -2,7 +2,7 @@
 	"name": "vscodefileheader",
 	"displayName": "VSCodeFileHeader",
 	"description": "header comment",
-	"version": "0.2.4",
+	"version": "0.2.5",
 	"publisher": "jankincai",
 	"author": {
 		"name": "JanKinCai",
@@ -72,6 +72,11 @@
 					"type": "boolean",
 					"default": false,
 					"description": "Insert Body Template"
+				},
+				"fileheader.history_author": {
+					"type": "boolean",
+					"default": false,
+					"description": "Record history modifier"
 				},
 				"fileheader.ignore": {
 					"type":"array",
