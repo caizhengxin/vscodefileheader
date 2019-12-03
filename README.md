@@ -1,6 +1,6 @@
 # VSCode FileHeader
 
-[![Markeetplace Badge][marketplace-badge]][marketplace] [![Install][install-badge]][marketplace] ![Size][size-badge] [![BSD License Badge][license-badge]][license]
+[![Markeetplace Badge][marketplace-badge]][marketplace] [![Install][install-badge]][marketplace] [![Download][download-badge]][marketplace] ![Size][size-badge] [![BSD License Badge][license-badge]][license]
 
 This is a header extension that contains multiple languages.
 
@@ -242,7 +242,8 @@ indent_size = 2
 
 [marketplace]: https://marketplace.visualstudio.com/items?itemName=jankincai.vscodefileheader#review-details
 [marketplace-badge]: https://vsmarketplacebadge.apphb.com/version-short/jankincai.vscodefileheader.svg?style=flat-square
-[install-badge]: https://vsmarketplacebadge.apphb.com/installs-short/jankincai.vscodefileheader.svg?style=flat-square
-[size-badge]: https://img.shields.io/github/languages/code-size/caizhengxin/vscodefileheader
-[license]: ./LLICENSE
-[license-badge]: https://img.shields.io/badge/license-BSD-blue.svg
+[install-badge]: https://img.shields.io/visual-studio-marketplace/i/jankincai.vscodefileheader?style=flat-square
+[download-badge]: https://img.shields.io/visual-studio-marketplace/d/jankincai.vscodefileheader?style=flat-square
+[size-badge]: https://img.shields.io/github/languages/code-size/caizhengxin/vscodefileheader?style=flat-square
+[license]: ./LICENSE
+[license-badge]: https://img.shields.io/github/license/caizhengxin/vscodefileheader?style=flat-square
