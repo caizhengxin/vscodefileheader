@@ -61,7 +61,6 @@
 				"fileheader.other_config": {
 					"type":"object",
 					"default": {
-						"email": "jankincai12@gmail.com"
 					},
 					"description": "Other header config"
 				},
