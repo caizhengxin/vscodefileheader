@@ -79,11 +79,6 @@
 					"default": false,
 					"description": "Insert Body Template"
 				},
-				"fileheader.history_author": {
-					"type": "boolean",
-					"default": false,
-					"description": "Record history modifier"
-				},
 				"fileheader.ignore": {
 					"type":"array",
 					"default": [],
