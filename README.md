@@ -5,20 +5,20 @@
 This is a header extension that contains multiple languages.
 
 * Usage [cookiecutter-vscode](https://github.com/caizhengxin/cookiecutter-vscode) create project.
-* [FileHeader Extension template](https://github.com/caizhengxin/fileheader-template)
+* [Custom fileheader Extension template](https://github.com/caizhengxin/fileheader-template)
 
 ## Install
 
-Method one:
+```bash
+1. ctrl + shift + x
+2. Search VSCodeFileHeader
+```
 
-``ctrl + shift + x``, Search ``VSCodeFileHeader``
-
-Method two:
-
-``ctrl + p``
+or
 
 ```bash
-ext install jankincai.vscodefileheader
+1. ctrl + p
+2. ext install jankincai.vscodefileheader
 ```
 
 ## Features
@@ -29,17 +29,6 @@ ext install jankincai.vscodefileheader
 * Support for suffix name mapping templates
 * Support for ignore suffix
 * Support for manual and automatic insert comment
-
-## Usage
-
-```python
-# Settings
-{
-    "fileheader.author": "JanKinCai",
-}
-
-# Save file or ``ctrl + alt + i`` insert comment
-```
 
 ## Demo
 
@@ -98,6 +87,17 @@ XML:
 * Vue
 * XML
 * YAML
+
+## Usage
+
+```python
+# Settings
+{
+    "fileheader.author": "JanKinCai",
+}
+
+# Save file or ``ctrl + alt + i`` insert comment
+```
 
 ## Requirements
 
@@ -164,7 +164,7 @@ ctrl + alt + i
     "fileheader.ignore": [
         "*.txt",             # Ignore suffix name
         "test.py",           # Ignore file
-        "test"               # Ignore path
+        "test"               # Ignore dir
     ]
 }
 ```
@@ -173,68 +173,50 @@ ctrl + alt + i
 
 > Add Header template
 
-template/header/EditorConfig.tmpl
+template/header/Python.tmpl
 
 ```conf
 # @Author: {{author}}
 # @Date:   {{create_time}}
+# @Email:  {{email}}
 # @Last Modified by:   {{last_modified_by}}
 # @Last Modified time: {{last_modified_time}}
-
 
 ```
 
 > Add Body template
 
-template/body/EditorConfig.tmpl
+template/body/Python.tmpl
 
 ```conf
-# http://editorconfig.org
 
-root = true
 
-[*]
-charset = utf-8
-end_of_line = lf
-insert_final_newline = true
-trim_trailing_whitespace = true
+def main():
+    print("Hello, World!")
 
-[*.{py,rst,ini}]
-indent_style = space
-indent_size = 4
 
-[*.{html,css,scss,json,yml}]
-indent_style = space
-indent_size = 2
-
-[*.md]
-trim_trailing_whitespace = false
-
-[Makefile]
-indent_style = tab
-
-[nginx.conf]
-indent_style = space
-indent_size = 2
+if __name__ == "__main__":
+    main()
 ```
 
-> Set template path
+> Settings
 
-```json
+```python
 {
-    "fileheader.custom_template_path": "xxx/template/"
+    # Set template path
+    "fileheader.custom_template_path": "xxx/template/",
+    # Set other config
+    "fileheader.other_config": {
+        "email": "Your email",
+    }
+    # Set suffix mapping
+    "fileheader.file_suffix_mapping": {
+        ".py": "Python"
+    },
 }
 ```
 
-> Set suffix mapping
-
-```json
-"fileheader.file_suffix_mapping": {
-    ".editorconfig": "EditorConfig"
-},
-```
-
-* [FileHeader Extension template](https://github.com/caizhengxin/fileheader-template)
+* [Custom fileheader Extension template](https://github.com/caizhengxin/fileheader-template)
 
 ## Known Issues
 
