@@ -6,6 +6,11 @@ Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how 
 
 ## [Unreleased]
 
+## [0.2.7] - 2019-12-5
+### Fixed
+
+- update php-template
+
 ## [0.2.6] - 2019-11-20
 ### Fixed
 
@@ -26,7 +31,8 @@ Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how 
 - Add suffix name mapping templates
 - Add ignore suffix
 
-[unreleased]: https://github.com/caizhengxin/vscodefileheader/compare/v0.2.6...HEAD
+[unreleased]: https://github.com/caizhengxin/vscodefileheader/compare/v0.2.7...HEAD
+[0.2.7]: https://github.com/caizhengxin/vscodefileheader/compare/v0.2.6...v0.2.7
 [0.2.6]: https://github.com/caizhengxin/vscodefileheader/compare/v0.2.3...v0.2.6
 [0.2.0]: https://github.com/caizhengxin/vscodefileheader/compare/v0.1.8...v0.2.1
 [0.1.0]: https://github.com/caizhengxin/vscodefileheader/compare/v0.0.2...v0.1.5
