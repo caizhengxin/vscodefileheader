@@ -58,6 +58,13 @@
 					"default": "YYYY-MM-DD HH:mm:ss",
 					"description": "Datetime format"
 				},
+				"fileheader.other_config": {
+					"type":"object",
+					"default": {
+						"email": "jankincai12@gmail.com"
+					},
+					"description": "Other header config"
+				},
 				"fileheader.open": {
 					"type": "boolean",
 					"default": false,

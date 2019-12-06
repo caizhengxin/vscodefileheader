@@ -225,14 +225,16 @@ function insert_header_body(editor:any, config:any):void{
 
 	open_tmpl(editor, config, "header", function(s:any){
 		let date:string = get_datetime();
-					
-		let ret:any = template.render(s.toString(), {
-			author: config.author,
-			create_time: date,
-			last_modified_by: config.author,
-			last_modified_time: date,
-		});
 
+		let ret:any = template.render(s.toString(), Object.assign(
+			{
+				author: config.author,
+				create_time: date,
+				last_modified_by: config.author,
+				last_modified_time: date,
+			},
+			config.other_config
+		));
 
 		if(lineCount <= 1){
 			open_tmpl(editor, config, "body", function(s:any){
