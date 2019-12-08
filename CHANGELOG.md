@@ -9,7 +9,7 @@ Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how 
 ## [0.3.0] - 2019-12-6
 ### Added
 
-- Add custom template header mapping
+- Add custom template header field mapping
 
 ## [0.2.7] - 2019-12-5
 ### Fixed
