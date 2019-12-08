@@ -4,6 +4,8 @@
 
 This is a header extension that contains multiple languages.
 
+Feel good friends please give a star ~
+
 * Usage [cookiecutter-vscode](https://github.com/caizhengxin/cookiecutter-vscode) create project.
 * [Custom fileheader Extension template](https://github.com/caizhengxin/fileheader-template)
 
