@@ -100,17 +100,10 @@ function get_active_dir(editor:any):string{
 function delete_editor_comment(editor:any):void{
 	let pathobj:any = path.parse(editor.document.fileName);
 
-	console.log(pathobj);
-
 	if(pathobj.ext.lastIndexOf(".php") !== -1){
 		let line:number = get_line(editor, "<?php");
 
 		if(line !== -1){
-			console.log("========----------");
-			// editor.document.delete(line);
-			// editor.document
-			// console.log(editor.document.lineAt(line));
-			// editor.document.lineAt(line)
 			editor.edit(function(editobj:any){
 				editobj.delete(new vscode.Range(line, 0, line, 200));
 			});
@@ -161,9 +154,14 @@ function get_default_template():string{
 // Get line
 function get_line(editor:any, str:string):number{
 	let document = editor.document;
+	let lineCount:number = document.lineCount;
 	let i:number = 0;
 
-	for(i = 0; i <= 10; i++){
+	if(lineCount > 10){
+		lineCount = header_max_line;
+	}
+
+	for(i = 0; i <= lineCount - 1; i++){
 		if (document.lineAt(i).text.indexOf(str) !== -1){
 			return i;
 		}
@@ -247,11 +245,7 @@ function update_header(editor:any, config:any):void{
 function insert_header_body(editor:any, config:any):void{
 	let lineCount:number = editor.document.lineCount;
 
-	console.log(">>>>>>>>>>>>>>>>>>>>>");
-
 	delete_editor_comment(editor);
-
-	console.log("====================");
 
 	open_tmpl(editor, config, "header", function(s:any){
 		let date:string = get_datetime();
