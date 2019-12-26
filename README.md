@@ -42,6 +42,10 @@ C:
 
 ![C](images/c.gif)
 
+PHP:
+
+![PHP](images/php.gif)
+
 Vue:
 
 ![Vue](images/vue.gif)
