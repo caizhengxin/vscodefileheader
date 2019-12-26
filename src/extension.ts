@@ -1,10 +1,11 @@
 // The module 'vscode' contains the VS Code extensibility API
 // Import the module and reference it with the alias vscode in your code below
 import * as vscode from 'vscode';
-import { SSL_OP_ALL } from 'constants';
-import { URL } from 'url';
+// import { SSL_OP_ALL } from 'constants';
+// import { URL } from 'url';
 import * as fs from 'fs';
 import * as moment from 'moment';
+// import { print } from 'util';
 
 
 var template = require("art-template");
@@ -92,6 +93,29 @@ function get_active_dir(editor:any):string{
 	let pathobj:any = path.parse(editor.document.fileName);
 
 	return pathobj.dir;
+}
+
+
+// delete
+function delete_editor_comment(editor:any):void{
+	let pathobj:any = path.parse(editor.document.fileName);
+
+	console.log(pathobj);
+
+	if(pathobj.ext.lastIndexOf(".php") !== -1){
+		let line:number = get_line(editor, "<?php");
+
+		if(line !== -1){
+			console.log("========----------");
+			// editor.document.delete(line);
+			// editor.document
+			// console.log(editor.document.lineAt(line));
+			// editor.document.lineAt(line)
+			editor.edit(function(editobj:any){
+				editobj.delete(new vscode.Range(line, 0, line, 200));
+			});
+		}
+	}
 }
 
 
@@ -222,6 +246,12 @@ function update_header(editor:any, config:any):void{
 // Insert Header or Body
 function insert_header_body(editor:any, config:any):void{
 	let lineCount:number = editor.document.lineCount;
+
+	console.log(">>>>>>>>>>>>>>>>>>>>>");
+
+	delete_editor_comment(editor);
+
+	console.log("====================");
 
 	open_tmpl(editor, config, "header", function(s:any){
 		let date:string = get_datetime();
