@@ -71,6 +71,56 @@ function get_config():any{
 }
 
 
+/*
+ * getPathObject
+ *
+ * @editor(any): editText object.
+ * 
+ * @return: any
+ */
+function getPathObject(editor: any): any{
+	return path.parse(editor.document.fileName);
+}
+
+
+/*
+ * isSuffix
+ *
+ * @editor(any): editText object.
+ * @suffix(string): File suffix name, eg: `.php`,
+ * 
+ * @return: boolean
+ */
+function isSuffix(editor: any, suffix: string): boolean{
+	return getPathObject(editor).ext.lastIndexOf(suffix) !== -1;
+}
+
+
+/*
+ * isSuffixList
+ *
+ * @editor(any): editText object.
+ * @suffixs(any): File suffix name list, eg: [`.php`],
+ * 
+ * @return: boolean
+ */
+function isSuffixList(editor: any, suffixs: any): boolean{
+	return suffixs.indexOf(getPathObject(editor).ext) !== -1;
+}
+
+
+/*
+ * getActivePath
+ *
+ * @editor(any): editText object.
+ * 
+ * @return: string
+ */
+function getActivePath(editor:any):string{
+	return getPathObject(editor).dir;
+}
+
+
 // Get Suffix
 function get_suffix(obj: any):string{
 	let pathobj:any = path.parse(obj.fileName);
@@ -88,26 +138,66 @@ function get_file_name(editor:any):string{
 }
 
 
-// Get active dir
-function get_active_dir(editor:any):string{
-	let pathobj:any = path.parse(editor.document.fileName);
+/*
+ * Match line
+ *
+ * @editor(any): editText object.
+ * @value(string): Match value.
+ * @max_line(number): Match max line.
+ * 
+ * @return: number, Not match line return -1
+ */
+function matchLine(editor:any, value:string, max_line:number=header_max_line):number{
+	let document = editor.document;
+	let lineCount:number = document.lineCount;
+	let i:number = 0;
 
-	return pathobj.dir;
+	if(lineCount > max_line){
+		lineCount = max_line;
+	}
+
+	for(i = 0; i <= lineCount - 1; i++){
+		if (document.lineAt(i).text.indexOf(value) !== -1){
+			return i;
+		}
+	}
+
+	return -1;
 }
 
 
-// delete
-function delete_editor_comment(editor:any):void{
-	let pathobj:any = path.parse(editor.document.fileName);
+/*
+ * Delete edittext comment
+ *
+ * @editor(any): editText object.
+ * @value(string): Match value.
+ * @max_line(number): Match max line.
+ * 
+ * @return: void
+ */
+function deleteEditorComment(editor:any, value:string, max_line:number=header_max_line):void{
+	let line:number = matchLine(editor, value, max_line);
 
-	if(pathobj.ext.lastIndexOf(".php") !== -1){
-		let line:number = get_line(editor, "<?php");
+	if(line !== -1){
+		editor.edit(function(editobj:any){
+			editobj.delete(new vscode.Range(line, 0, line, value.length));
+		});
+	}
+}
 
-		if(line !== -1){
-			editor.edit(function(editobj:any){
-				editobj.delete(new vscode.Range(line, 0, line, 200));
-			});
-		}
+
+/*
+ * deleteEditorComments
+ *
+ * @editor(any): editText object.
+ * 
+ * @return: void
+ */
+function deleteEditorComments(editor:any):void{
+	if(isSuffix(editor, ".php")){
+		deleteEditorComment(editor, "<?php", 2);
+	}else if(isSuffixList(editor, [".py", ".pxd", ".pyx"])){
+		deleteEditorComment(editor, "# -*- coding: utf-8 -*-", 1);
 	}
 }
 
@@ -152,13 +242,13 @@ function get_default_template():string{
 
 
 // Get line
-function get_line(editor:any, str:string):number{
+function get_line(editor:any, str:string, line:number=header_max_line):number{
 	let document = editor.document;
 	let lineCount:number = document.lineCount;
 	let i:number = 0;
 
 	if(lineCount > 10){
-		lineCount = header_max_line;
+		lineCount = line;
 	}
 
 	for(i = 0; i <= lineCount - 1; i++){
@@ -245,7 +335,7 @@ function update_header(editor:any, config:any):void{
 function insert_header_body(editor:any, config:any):void{
 	let lineCount:number = editor.document.lineCount;
 
-	delete_editor_comment(editor);
+	deleteEditorComments(editor);
 
 	open_tmpl(editor, config, "header", function(s:any){
 		let date:string = get_datetime();
