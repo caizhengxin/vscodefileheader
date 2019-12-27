@@ -5,6 +5,9 @@ All notable changes to the "vscodefileheader" extension will be documented in th
 Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how to structure this file.
 
 ## [Unreleased]
+### Added
+
+- If exists ``# -*- coding: utf-8 -*-``, first delete and insert python header comment.
 
 ## [0.3.2] - 2019-12-26
 ### Fixed
@@ -14,7 +17,7 @@ Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how 
 ## [0.3.1] - 2019-12-26
 ### Fixed
 
-- php tag bug
+- Fix php tag bug (#1)
 
 ## [0.3.0] - 2019-12-6
 ### Added
@@ -24,7 +27,7 @@ Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how 
 ## [0.2.7] - 2019-12-5
 ### Fixed
 
-- update php-template
+- Update php-template
 
 ## [0.2.6] - 2019-11-20
 ### Fixed
@@ -47,7 +50,7 @@ Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how 
 - Add ignore suffix
 
 [unreleased]: https://github.com/caizhengxin/vscodefileheader/compare/v0.3.2...HEAD
-[0.3.2]: https://github.com/caizhengxin/vscodefileheader/compare/v0.2.1...v0.3.2
+[0.3.2]: https://github.com/caizhengxin/vscodefileheader/compare/v0.3.1...v0.3.2
 [0.3.1]: https://github.com/caizhengxin/vscodefileheader/compare/v0.2.7...v0.3.1
 [0.2.7]: https://github.com/caizhengxin/vscodefileheader/compare/v0.2.6...v0.2.7
 [0.2.6]: https://github.com/caizhengxin/vscodefileheader/compare/v0.2.3...v0.2.6
