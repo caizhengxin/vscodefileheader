@@ -8,6 +8,11 @@ Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how 
 ### Added
 
 - If exists ``# -*- coding: utf-8 -*-``, first delete and insert python header comment.
+- Add rust template
+
+### Changed
+
+- Update template format
 
 ## [0.3.2] - 2019-12-26
 ### Fixed

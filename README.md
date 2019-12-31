@@ -66,7 +66,6 @@ XML:
 * Clojire
 * CSS
 * D
-* Diff
 * Erlang
 * Go
 * Haskell
