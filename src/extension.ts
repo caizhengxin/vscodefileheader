@@ -66,8 +66,12 @@ const file_suffix_mapping:any = {
 };
 
 
-// Get config
-function get_config():any{
+/*
+ * getConfig
+ *
+ * @return: any
+ */
+function getConfig():any{
 	return vscode.workspace.getConfiguration("fileheader");
 }
 
@@ -122,19 +126,28 @@ function getActivePath(editor:any):string{
 }
 
 
-// Get Suffix
-function get_suffix(obj: any):string{
-	let pathobj:any = path.parse(obj.fileName);
-
-	// console.log(pathobj);
+/*
+ * getSuffix
+ *
+ * @editor(any): editText object.
+ * 
+ * @return: string
+ */
+function getSuffix(editor: any):string{
+	let pathobj:any = path.parse(editor.document.fileName);
 
 	return pathobj.ext.toLowerCase() || pathobj.name.toLowerCase();
-	// return obj.fileName.substr(obj.fileName.lastIndexOf(".")).toLowerCase();
 }
 
 
-// Get file name
-function get_file_name(editor:any):string{
+/*
+ * getFileName
+ *
+ * @editor(any): editText object.
+ * 
+ * @return: string
+ */
+function getFileName(editor:any):string{
 	return path.parse(editor.document.fileName).name.toLowerCase();
 }
 
@@ -203,9 +216,16 @@ function deleteEditorComments(editor:any):void{
 }
 
 
-// Ignore
-function is_ignore(editor:any, ignore:any):boolean{
-	let pathobj:any = path.parse(editor.document.fileName);
+/*
+ * deleteEditorComments
+ *
+ * @editor(any): editText object.
+ * @ignore(string[]): Filter rules.
+ * 
+ * @return: boolean
+ */
+function isIgnore(editor:any, ignore: string[]):boolean{
+	let pathobj:any = getPathObject(editor);
 
 
 	// Ignore suffix
@@ -218,13 +238,19 @@ function is_ignore(editor:any, ignore:any):boolean{
 		return false;
 	}
 
-
 	// Ignore path
 	for(let v of ignore){
 		if(pathobj.dir.indexOf(v) !== -1){
 			return false;
 		}
 	}
+
+	// for(let ige of ignore){
+	// 	ige = ige.replace("*", ".*");
+
+	// 	pathobj
+
+	// }
 
 	return true;
 }
@@ -275,8 +301,8 @@ function is_header(editor:any):boolean{
 
 // Get Template
 function get_tmpl(editor:any, config:any, tmplpath:string="", type:string="header"):string{
-	let suffix:string = get_suffix(editor.document);
-	let name:string = get_file_name(editor);
+	let suffix:string = getSuffix(editor);
+	let name:string = getFileName(editor);
 
 	let tmpl:string = (config.file_suffix_mapping[name + suffix] || config.file_suffix_mapping[suffix] || file_suffix_mapping[suffix]) + ".tmpl";
 	// var tmpl_path:string = config.custom_template_path || get_default_template();
@@ -384,7 +410,7 @@ export function activate(context: vscode.ExtensionContext) {
 	// The commandId parameter must match the command field in package.json
 	let disposable = vscode.commands.registerCommand('extension.fileheader', () => {
 		// The code you place here will be executed every time your command is executed
-		let config:any = get_config();
+		let config:any = getConfig();
 		let editor:any = vscode.window.activeTextEditor;
 
 
@@ -398,14 +424,14 @@ export function activate(context: vscode.ExtensionContext) {
 
 	// Save
 	vscode.workspace.onWillSaveTextDocument(e => {
-		let config:any = get_config();
+		let config:any = getConfig();
 		let editor:any = vscode.window.activeTextEditor;
 
 
 		// Update Header
 		if(is_header(editor)){
 			update_header(editor, config);
-		}else if(config.save && is_ignore(editor, config.ignore)){
+		}else if(config.save && isIgnore(editor, config.ignore)){
 			insert_header_body(editor, config);
 		}
 	});
@@ -413,10 +439,10 @@ export function activate(context: vscode.ExtensionContext) {
 
 	// Open
 	vscode.workspace.onDidOpenTextDocument(e => {
-		let config:any = get_config();
+		let config:any = getConfig();
 		let editor:any = vscode.window.activeTextEditor;
 
-		if(config.open && !is_header(editor) && is_ignore(editor, config.ignore)){
+		if(config.open && !is_header(editor) && isIgnore(editor, config.ignore)){
 			insert_header_body(editor, config);
 		}
 	});
