@@ -13,6 +13,7 @@ Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how 
 ### Changed
 
 - Update template format
+- Update ignore achieve
 
 ## [0.3.2] - 2019-12-26
 ### Fixed
