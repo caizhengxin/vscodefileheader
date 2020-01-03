@@ -84,6 +84,13 @@ function getConfig():any{
  * @return: any
  */
 function getPathObject(editor: any): any{
+	/*
+	 * root
+	 * dir
+	 * base
+	 * ext
+	 * name
+	 */
 	return path.parse(editor.document.fileName);
 }
 
@@ -227,30 +234,16 @@ function deleteEditorComments(editor:any):void{
 function isIgnore(editor:any, ignore: string[]):boolean{
 	let pathobj:any = getPathObject(editor);
 
+	console.log("sss".match("[a-z]+"));
 
-	// Ignore suffix
-	if(pathobj.ext.indexOf(".tmpl") !== -1 || ignore.indexOf("*" + pathobj.ext) !== -1 || ignore.indexOf(pathobj.ext) !== -1){
-		return false;
-	}
+	for(let ige of ignore){
+		let reg: any = new RegExp(ige.replace("*", ".*"));
 
-	// Ignore file
-	if(ignore.indexOf(pathobj.base) !== -1){
-		return false;
-	}
-
-	// Ignore path
-	for(let v of ignore){
-		if(pathobj.dir.indexOf(v) !== -1){
+		if(reg.test(pathobj.base) || reg.test(path.join(pathobj.dir, pathobj.base))){
 			return false;
 		}
+
 	}
-
-	// for(let ige of ignore){
-	// 	ige = ige.replace("*", ".*");
-
-	// 	pathobj
-
-	// }
 
 	return true;
 }
