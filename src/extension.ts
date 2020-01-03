@@ -2,7 +2,7 @@
  * @Author: JanKinCai
  * @Date:   2020-01-03 22:02:02
  * @Last Modified by:   JanKinCai
- * @Last Modified time: 2020-01-03 22:02:21
+ * @Last Modified time: 2020-01-03 22:33:20
  */
 
 // The module 'vscode' contains the VS Code extensibility API
@@ -19,11 +19,11 @@ var template = require("art-template");
 var path = require("path");
 
 
-const header_max_line:number = 10;
+const header_max_line: number = 10;
 
 
 // Suffix ---> Template name
-const file_suffix_mapping:any = {
+const file_suffix_mapping: any = {
     ".as": "ActionScript",
     ".scpt": "AppleScript",
     ".asp": "ASP",
@@ -231,6 +231,41 @@ function deleteEditorComments(editor: any): void {
 
 
 /**
+ * Insert End Comment
+ *
+ * @param editor(any): editText object.
+ * @param value(string): Insert value.
+ * @param line(number): End line.
+ * 
+ * @return void
+ */
+function insertEndComment(editor: any, value: string, line: number): void {
+	editor.edit((editobj: any) => {
+		editobj.delete(new vscode.Range(line, 0, line, value.length));
+	});
+}
+
+
+/**
+ * Insert End Comments
+ * 
+ * @param editor(any): editText object.
+ * @param config(any): VScode config.
+ * 
+ * @return void
+ */
+function insertEndComments(editor: any, config: any): void {
+	let lineCount: number = editor.document.lineCount;
+
+	if(config.body && lineCount <= 1){
+		if(isSuffix(editor, ".php")){
+			insertEndComment(editor, "?>", lineCount + 1);
+		}
+	}
+}
+
+
+/**
  * deleteEditorComments
  *
  * @param editor(any): editText object.
@@ -414,7 +449,10 @@ function insertHeaderBody(editor: any, config: any): void {
 
 			editor.document.save();					
 		}
-	});	
+	});
+
+	// Insert End Comment
+	insertEndComments(editor, config);
 }
 
 

@@ -5,15 +5,19 @@ All notable changes to the "vscodefileheader" extension will be documented in th
 Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how to structure this file.
 
 ## [Unreleased]
+
+## [0.4.0] - 2020-01-03
 ### Added
 
 - If exists ``# -*- coding: utf-8 -*-``, first delete and insert python header comment.
 - Add rust template
+- Add php tail tag, body is not opened
 
 ### Changed
 
 - Update template format
 - Update ignore achieve
+- Update function comment
 
 ## [0.3.2] - 2019-12-26
 ### Fixed
@@ -55,7 +59,8 @@ Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how 
 - Add suffix name mapping templates
 - Add ignore suffix
 
-[unreleased]: https://github.com/caizhengxin/vscodefileheader/compare/v0.3.2...HEAD
+[unreleased]: https://github.com/caizhengxin/vscodefileheader/compare/v0.4.0...HEAD
+[0.4.0]: https://github.com/caizhengxin/vscodefileheader/compare/v0.3.2...v0.4.0
 [0.3.2]: https://github.com/caizhengxin/vscodefileheader/compare/v0.3.1...v0.3.2
 [0.3.1]: https://github.com/caizhengxin/vscodefileheader/compare/v0.2.7...v0.3.1
 [0.2.7]: https://github.com/caizhengxin/vscodefileheader/compare/v0.2.6...v0.2.7
