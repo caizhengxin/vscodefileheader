@@ -10,7 +10,7 @@
 		"url": "https://github.com/caizhengxin/"
 	},
 	"homepage": "https://github.com/caizhengxin/vscodefileheader",
-	"license": "BSD",
+	"license": "BSD-3-Clause",
 	"repository": {
 		"type": "git",
 		"url": "https://github.com/caizhengxin/vscodefileheader"
@@ -59,9 +59,8 @@
 					"description": "Datetime format"
 				},
 				"fileheader.other_config": {
-					"type":"object",
-					"default": {
-					},
+					"type": "object",
+					"default": {},
 					"description": "Other header config"
 				},
 				"fileheader.open": {
@@ -80,7 +79,7 @@
 					"description": "Insert Body Template"
 				},
 				"fileheader.ignore": {
-					"type":"array",
+					"type": "array",
 					"default": [],
 					"description": "Ignore file"
 				},
@@ -104,12 +103,12 @@
 		],
 		"keybindings": [
 			{
-			  "command": "extension.fileheader",
-			  "key": "ctrl+alt+i",
-			  "mac": "ctrl+cmd+i",
-			  "when": "editorTextFocus"
+				"command": "extension.fileheader",
+				"key": "ctrl+alt+i",
+				"mac": "ctrl+cmd+i",
+				"when": "editorTextFocus"
 			}
-		]	
+		]
 	},
 	"scripts": {
 		"vscode:prepublish": "npm run compile",

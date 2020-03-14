@@ -402,7 +402,9 @@ function updateHeader(editor: any, config: any): void {
 		editobj.replace(new vscode.Range(line, start, line, 100), "   " + config.author);
 	});
 
-	editor.document.save();
+	if (vscode.version < "1.43.0") {
+		editor.document.save();	
+	}
 }
 
 

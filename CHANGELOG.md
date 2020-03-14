@@ -6,6 +6,11 @@ Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how 
 
 ## [Unreleased]
 
+## [0.4.1] - 2020-03-14
+### Fixed
+
+- Support vscode 1.43.0
+
 ## [0.4.0] - 2020-01-03
 ### Added
 
@@ -59,7 +64,8 @@ Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how 
 - Add suffix name mapping templates
 - Add ignore suffix
 
-[unreleased]: https://github.com/caizhengxin/vscodefileheader/compare/v0.4.0...HEAD
+[unreleased]: https://github.com/caizhengxin/vscodefileheader/compare/v0.4.1...HEAD
+[0.4.1]: https://github.com/caizhengxin/vscodefileheader/compare/v0.4.0...v0.4.1
 [0.4.0]: https://github.com/caizhengxin/vscodefileheader/compare/v0.3.2...v0.4.0
 [0.3.2]: https://github.com/caizhengxin/vscodefileheader/compare/v0.3.1...v0.3.2
 [0.3.1]: https://github.com/caizhengxin/vscodefileheader/compare/v0.2.7...v0.3.1
