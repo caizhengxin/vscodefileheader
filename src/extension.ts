@@ -2,7 +2,7 @@
  * @Author: JanKinCai
  * @Date:   2020-01-03 22:02:02
  * @Last Modified by:   JanKinCai
- * @Last Modified time: 2020-01-03 22:33:20
+ * @Last Modified time: 2020-05-17 13:15:50
  */
 
 // The module 'vscode' contains the VS Code extensibility API
@@ -185,7 +185,7 @@ function matchLine(editor: any, value: string, max_line: number=header_max_line)
 	}
 
 	for(i = 0; i <= lineCount - 1; i++){
-		if (document.lineAt(i).text.indexOf(value) !== -1){
+		if (document.lineAt(i).text.toLowerCase().indexOf(value.toLowerCase()) !== -1){
 			return i;
 		}
 	}
@@ -319,7 +319,7 @@ function getDefaultTemplate(): string {
  * @return boolean: Judge if the head exists.
  */
 function isHeaderExists(editor: any): boolean {
-	if(matchLine(editor, "Author:") !== -1 && matchLine(editor, "Last Modified by:") !== -1){
+	if(matchLine(editor, "@Author:") !== -1 && matchLine(editor, "@Last Modified by:") !== -1){
 		return true;
 	}
 
@@ -393,7 +393,7 @@ function openTemplate(editor: any, config: any, type: string="header", callback:
  */
 function updateHeader(editor: any, config: any): void {
 	editor.edit((editobj: any) => {
-		let line: number = matchLine(editor, "Last Modified time:", 8);
+		let line: number = matchLine(editor, "@Last Modified time:", 8);
 		let start: number = editor.document.lineAt(line).text.indexOf(":") + 1;
 		editobj.replace(new vscode.Range(line, start, line, 100), " " + getDateTime());
 
@@ -404,6 +404,28 @@ function updateHeader(editor: any, config: any): void {
 
 	if (vscode.version < "1.43.0") {
 		editor.document.save();	
+	}
+}
+
+
+/**
+ * Support Predefined variables: https://code.visualstudio.com/docs/editor/variables-reference
+ */
+function predefinedVariables(editor: any): any {
+	const pathobj: any = getPathObject(editor);
+	const rfd: any = pathobj.dir.split(path.sep);
+
+	return {
+		"workspaceFolder": vscode.workspace.rootPath,
+		"workspaceFolderBasename": vscode.workspace.name,
+		"file": editor.document.fileName,
+		"relativeFile": path.join(rfd[rfd.length - 1], pathobj.base),
+		"relativeFileDirname": rfd[rfd.length - 1],
+		"fileBasename": pathobj.base,
+		"fileBasenameNoExtension": pathobj.name,
+		"fileDirname": pathobj.dir,
+		"fileExtname": pathobj.ext,
+		"cwd": vscode.workspace.rootPath,
 	}
 }
 
@@ -431,7 +453,8 @@ function insertHeaderBody(editor: any, config: any): void {
 				last_modified_by: config.author,
 				last_modified_time: date,
 			},
-			config.other_config
+			config.other_config,
+			predefinedVariables(editor),
 		));
 
 		if(lineCount <= 1){
@@ -486,6 +509,8 @@ export function activate(context: vscode.ExtensionContext) {
 	vscode.workspace.onWillSaveTextDocument(() =>{
 		let config: any = getConfig();
 		let editor: any = vscode.window.activeTextEditor;
+
+		console.log(vscode.workspace.rootPath);
 
 		// Update Header
 		if(isHeaderExists(editor)){

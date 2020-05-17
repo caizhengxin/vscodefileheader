@@ -31,6 +31,7 @@ or
 * Support for suffix name mapping templates
 * Support for ignore suffix
 * Support for manual and automatic insert comment
+* [Support vscode variables](https://code.visualstudio.com/docs/editor/variables-reference)
 
 ## Demo
 
@@ -176,6 +177,8 @@ ctrl + alt + i
 
 * Set custom template
 
+Note: ``The template header connot be modified and can be added.``
+
 > Add Header template
 
 template/header/Python.tmpl
@@ -222,6 +225,33 @@ if __name__ == "__main__":
 ```
 
 * [Custom fileheader Extension template](https://github.com/caizhengxin/fileheader-template)
+
+* Set vscode variables
+
+Modify template
+
+https://code.visualstudio.com/docs/editor/variables-reference
+
+> Add Header template
+
+template/header/Python.tmpl
+
+```conf
+# @Author: {{author}}
+# @Date:   {{create_time}}
+# @Last Modified by:   {{last_modified_by}}
+# @Last Modified time: {{last_modified_time}}
+# {{workspaceFolder}}
+# {{workspaceFolderBasename}}
+# {{file}}
+# {{relativeFile}}
+# {{relativeFileDirname}}
+# {{fileBasename}}
+# {{fileBasenameNoExtension}}
+# {{fileDirname}}
+# {{fileExtname}}
+# {{cwd}}
+```
 
 ## Known Issues
 
