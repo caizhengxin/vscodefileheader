@@ -109,7 +109,7 @@ XML:
 
 ## Extension Settings
 
-* Set author
+### Set author
 
 ```json
 {
@@ -117,7 +117,7 @@ XML:
 }
 ```
 
-* Set custom suffix name
+### Set custom suffix name
 
 ```json
 {
@@ -127,7 +127,7 @@ XML:
 }
 ```
 
-* Set insert body switch
+### Set insert body switch
 
 ```json
 {
@@ -135,7 +135,7 @@ XML:
 }
 ```
 
-* Set open file insert comment
+### Set open file insert comment
 
 ```python
 {
@@ -143,7 +143,7 @@ XML:
 }
 ```
 
-* Set save file insert comment, default ``true``
+### Set save file insert comment, default ``true``
 
 ```python
 {
@@ -151,11 +151,10 @@ XML:
 }
 
 # Set false, Need to add comments manually
-
 ctrl + alt + i
 ```
 
-* Set date foramt
+### Set date foramt
 
 ```python
 {
@@ -163,7 +162,7 @@ ctrl + alt + i
 }
 ```
 
-* Set ignore
+### Set ignore
 
 ```python
 {
@@ -175,13 +174,11 @@ ctrl + alt + i
 }
 ```
 
-* Set custom template
+### Set custom template(Add Email)
 
 Note: ``The template header connot be modified and can be added.``
 
-> Add Header template
-
-template/header/Python.tmpl
+Custom Header template ``template/header/Python.tmpl``:
 
 ```conf
 # @Author: {{author}}
@@ -192,9 +189,7 @@ template/header/Python.tmpl
 
 ```
 
-> Add Body template
-
-template/body/Python.tmpl
+Custom Body template ``template/body/Python.tmpl``:
 
 ```conf
 
@@ -207,7 +202,7 @@ if __name__ == "__main__":
     main()
 ```
 
-> Settings
+Settings:
 
 ```python
 {
@@ -226,15 +221,11 @@ if __name__ == "__main__":
 
 * [Custom fileheader Extension template](https://github.com/caizhengxin/fileheader-template)
 
-* Set vscode variables
-
-Modify template
+### Set vscode variables
 
 https://code.visualstudio.com/docs/editor/variables-reference
 
-> Add Header template
-
-template/header/Python.tmpl
+Custom Header template ``template/header/Python.tmpl``:
 
 ```conf
 # @Author: {{author}}

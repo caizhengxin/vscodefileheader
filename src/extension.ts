@@ -2,7 +2,7 @@
  * @Author: JanKinCai
  * @Date:   2020-01-03 22:02:02
  * @Last Modified by:   JanKinCai
- * @Last Modified time: 2020-05-17 13:15:50
+ * @Last Modified time: 2020-09-28 19:15:06
  */
 
 // The module 'vscode' contains the VS Code extensibility API
@@ -513,10 +513,13 @@ export function activate(context: vscode.ExtensionContext) {
 		console.log(vscode.workspace.rootPath);
 
 		// Update Header
-		if(isHeaderExists(editor)){
-			updateHeader(editor, config);
-		}else if(config.save && isIgnore(editor, config.ignore)){
-			insertHeaderBody(editor, config);
+
+		if (isIgnore(editor, config.ignore)) {
+			if(isHeaderExists(editor)){
+				updateHeader(editor, config);
+			}else if(config.save){
+				insertHeaderBody(editor, config);
+			}
 		}
 	});
 

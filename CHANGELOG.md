@@ -6,8 +6,14 @@ Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how 
 
 ## [Unreleased]
 
+## [0.5.1] - 2020-09-28
+### Fixed
+
+- ignore file, if the file header comment exists, it will be updated
+
 ## [0.5.0] - 2020-06-28
 ### Added
+
 - [Support vscode variables](https://code.visualstudio.com/docs/editor/variables-reference)
 
 ## [0.4.1] - 2020-03-14
@@ -68,7 +74,8 @@ Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how 
 - Add suffix name mapping templates
 - Add ignore suffix
 
-[unreleased]: https://github.com/caizhengxin/vscodefileheader/compare/v0.5.0...HEAD
+[unreleased]: https://github.com/caizhengxin/vscodefileheader/compare/v0.5.1...HEAD
+[0.5.1]: https://github.com/caizhengxin/vscodefileheader/compare/v0.5.0...v0.5.1
 [0.5.0]: https://github.com/caizhengxin/vscodefileheader/compare/v0.4.1...v0.5.0
 [0.4.1]: https://github.com/caizhengxin/vscodefileheader/compare/v0.4.0...v0.4.1
 [0.4.0]: https://github.com/caizhengxin/vscodefileheader/compare/v0.3.2...v0.4.0
