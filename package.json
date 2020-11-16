@@ -80,7 +80,7 @@
 				},
 				"fileheader.is_header_exists": {
 					"type": "string",
-					"default": "",
+					"default": null,
 					"description": "Determine whether the header comment is inserted"
 				},
 				"fileheader.body": {
@@ -95,20 +95,29 @@
 				},
 				"fileheader.custom_template_path": {
 					"type": "string",
-					"default": "",
+					"default": null,
 					"description": "Custom template path"
 				},
 				"fileheader.file_suffix_mapping": {
 					"type": "object",
 					"default": {},
 					"description": "File suffix mapping"
+				},
+				"fileheader.remote": {
+					"type": "string",
+					"default": null,
+					"description": "Sync remote template"
 				}
 			}
 		},
 		"commands": [
 			{
 				"command": "extension.fileheader",
-				"title": "File Header"
+				"title": "File Header: Add header comment"
+			},
+			{
+				"command": "extension.synctemplate",
+				"title": "File Header: Sync template"
 			}
 		],
 		"keybindings": [

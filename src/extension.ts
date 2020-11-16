@@ -2,7 +2,7 @@
  * @Author: JanKinCai
  * @Date:   2020-01-03 22:02:02
  * @Last Modified by:   JanKinCai
- * @Last Modified time: 2020-11-16 21:27:36
+ * @Last Modified time: 2020-11-16 22:12:45
  */
 
 // The module 'vscode' contains the VS Code extensibility API
@@ -10,8 +10,7 @@
 import * as vscode from 'vscode';
 import * as fs from 'fs';
 import * as moment from 'moment';
-import { config } from 'process';
-
+import * as child_process from 'child_process';
 
 var template = require("art-template");
 var path = require("path");
@@ -69,6 +68,17 @@ const file_suffix_mapping: any = {
 	".yml": "YAML",
 	".yaml": "YAML"
 };
+
+
+/**
+ * Sync template 
+ */
+function syncTemplate(config: any) {
+
+	if (config.custom_template_path && config.remote) {
+		child_process.exec(`git clone ${config.remote} ${config.custom_template_path}`);
+	}
+}
 
 
 /**
@@ -516,12 +526,14 @@ export function activate(context: vscode.ExtensionContext) {
 	// This line of code will only be executed once when your extension is activated
 	console.log('Congratulations, your extension "vscodefileheader" is now active!');
 
+	let config: any = getConfig();
+	syncTemplate(config);
+
 	// The command has been defined in the package.json file
 	// Now provide the implementation of the command with registerCommand
 	// The commandId parameter must match the command field in package.json
 	let disposable = vscode.commands.registerCommand('extension.fileheader', () => {
 		// The code you place here will be executed every time your command is executed
-		let config: any = getConfig();
 		let editor: any = vscode.window.activeTextEditor;
 
 		if(!isHeaderExists(editor, config)){
@@ -531,10 +543,13 @@ export function activate(context: vscode.ExtensionContext) {
 
 	context.subscriptions.push(disposable);
 
+	disposable = vscode.commands.registerCommand('extension.synctemplate', () => {
+		syncTemplate(config);
+	});
+	context.subscriptions.push(disposable);
 
 	// Save
 	vscode.workspace.onWillSaveTextDocument(() =>{
-		let config: any = getConfig();
 		let editor: any = vscode.window.activeTextEditor;
 
 		// console.log(vscode.workspace.rootPath);
@@ -553,7 +568,6 @@ export function activate(context: vscode.ExtensionContext) {
 
 	// Open
 	vscode.workspace.onDidOpenTextDocument(() => {
-		let config: any = getConfig();
 		let editor: any = vscode.window.activeTextEditor;
 
 		if(config.open && !isHeaderExists(editor, config) && isIgnore(editor, config.ignore)){
