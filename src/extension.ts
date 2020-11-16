@@ -2,7 +2,7 @@
  * @Author: JanKinCai
  * @Date:   2020-01-03 22:02:02
  * @Last Modified by:   JanKinCai
- * @Last Modified time: 2020-11-16 23:10:37
+ * @Last Modified time: 2020-11-16 23:49:56
  */
 
 // The module 'vscode' contains the VS Code extensibility API
@@ -78,6 +78,10 @@ var file_suffix_mapping: any = {
 function syncTemplate(config: any): void {
 
 	if (config.custom_template_path && config.remote) {
+
+		if (!fs.existsSync(config.custom_template_path)) {
+			fs.mkdirSync(config.custom_template_path, {recursive: true});
+		}
 
 		/* git clone */
 		child_process.exec(`git clone ${config.remote} ${config.custom_template_path}`);

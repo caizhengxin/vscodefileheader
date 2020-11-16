@@ -32,6 +32,7 @@ or
 * Support for ignore suffix
 * Support for manual and automatic insert comment
 * [Support vscode variables](https://code.visualstudio.com/docs/editor/variables-reference)
+* Support remote synchronization
 
 ## Demo
 
@@ -105,76 +106,43 @@ XML:
 # Save file or ``ctrl + alt + i`` insert comment
 ```
 
-## Requirements
-
 ## Extension Settings
 
-### Set author
-
 ```json
 {
-    "fileheader.author": "Your name"
-}
-```
+    // Set author
+    "fileheader.author": "Your name",
 
-### Set custom suffix name
+    // Set insert body switch, default false
+    "fileheader.body": true,
 
-```json
-{
-    "fileheader.file_suffix_mapping": {
-        ".pyx": "Python"
-    }
-}
-```
-
-### Set insert body switch
-
-```json
-{
-    "fileheader.body": true
-}
-```
-
-### Set open file insert comment
-
-```python
-{
+    // Set open file to insert header comment, default false
     "fileheader.open": true,
-}
-```
 
-### Set save file insert comment, default ``true``
-
-```python
-{
+    // Set save file to insert header comment, default true
     "fileheader.save": true,
-}
 
-# Set false, Need to add comments manually
-ctrl + alt + i
-```
+    // find max line of header comment, default 10
+    "fileheader.header_max_line": 10,
 
-### Set date foramt
+    // Set datetime format, default YYYY-MM-DD HH:mm:ss
+    // moment.js
+    "fileheader.dateformat": "YYYY-MM-DD HH:mm:ss",
 
-```python
-{
-    "fileheader.dateformat": "YYYY-MM-DD HH:mm:ss"  # moment.js
-}
-```
+    // Set template mapping
+    "fileheader.file_suffix_mapping": {
+        ".pyx": "Python",
+    },
 
-### Set ignore
-
-```python
-{
     "fileheader.ignore": [
-        "*.txt",             # Ignore suffix name
-        "test.py",           # Ignore file
-        "test"               # Ignore dir
+        "*.txt",             // Ignore suffix name
+        "test.py",           // Ignore file
+        "test"               // Ignore dir
     ]
 }
 ```
 
-### Set custom template(Add Email)
+### Custom template(Add Email)
 
 Note: ``The template header connot be modified and can be added.``
 
@@ -186,7 +154,6 @@ Custom Header template ``template/header/Python.tmpl``:
 # @Email:  {{email}}
 # @Last Modified by:   {{last_modified_by}}
 # @Last Modified time: {{last_modified_time}}
-
 ```
 
 Custom Body template ``template/body/Python.tmpl``:
@@ -221,7 +188,34 @@ Settings:
 
 * [Custom fileheader Extension template](https://github.com/caizhengxin/fileheader-template)
 
-### Set vscode variables
+### fully modify template (example)
+
+Custom Header template template/header/JKC.tmpl:
+
+```conf
+# @Name: {{name}}
+```
+
+Custom Header template template/body/JKC.tmpl:
+
+```conf
+```
+
+settings:
+
+```python
+{
+    "fileheader.is_header_exists": "@Name:",
+    "fileheader.other_config": {
+        "name": "jankincai",
+    },
+    "fileheader.file_suffix_mapping": {
+        ".jkc": "JKC"
+    },   
+}
+```
+
+### vscode variables
 
 https://code.visualstudio.com/docs/editor/variables-reference
 
@@ -244,9 +238,19 @@ Custom Header template ``template/header/Python.tmpl``:
 # {{cwd}}
 ```
 
-## Known Issues
+### Sync remote template
 
-## Release Notes
+```python
+{
+    # Set template path
+    "fileheader.custom_template_path": "xxx/template/",
+
+    # set ssh, https://jdblischak.github.io/2014-09-18-chicago/novice/git/05-sshkeys.html
+    # "fileheader.remote": "git@github.com:caizhengxin/vscodefileheader.git"
+
+    "fileheader.remote": "https://github.com/caizhengxin/vscodefileheader.git"
+}
+```
 
 [marketplace]: https://marketplace.visualstudio.com/items?itemName=jankincai.vscodefileheader#review-details
 [marketplace-badge]: https://vsmarketplacebadge.apphb.com/version-short/jankincai.vscodefileheader.svg?style=flat-square
