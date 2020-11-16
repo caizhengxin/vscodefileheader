@@ -2,7 +2,7 @@
  * @Author: JanKinCai
  * @Date:   2020-01-03 22:02:02
  * @Last Modified by:   JanKinCai
- * @Last Modified time: 2020-11-16 23:49:56
+ * @Last Modified time: 2020-11-17 00:41:44
  */
 
 // The module 'vscode' contains the VS Code extensibility API
@@ -406,27 +406,19 @@ function getTemplatePath(editor: any, config: any, tmplpath: string="", type: st
 function openTemplate(editor: any, config: any, type: string="header", callback: any): void {
 	let tmpl_path: string = getTemplatePath(editor, config, "", type);
 
-	fs.exists(tmpl_path, (exists) => {
-		if(exists){
-			// Custom template
-			vscode.workspace.fs.readFile(vscode.Uri.file(tmpl_path)).then(s => {
-				callback(s);
-			});
-		}else{
-			// Default template
-			tmpl_path = getTemplatePath(editor, config, getDefaultTemplate(), type);
-			fs.exists(tmpl_path, (exists) => {
-				if(exists){
-					vscode.workspace.fs.readFile(vscode.Uri.file(tmpl_path)).then(s => {
-						callback(s);
-					});	
-				}else{
-					// callback("");
-					console.log("Not found fileheader template: " + tmpl_path);
-				}
-			});		
-		}
-	});
+	if (!fs.existsSync(tmpl_path)) {
+		tmpl_path = getTemplatePath(editor, config, getDefaultTemplate(), type);
+	}
+
+	if (fs.existsSync(tmpl_path)) {
+		vscode.workspace.fs.readFile(vscode.Uri.file(tmpl_path)).then(s => {
+			callback(s);
+		});	
+	}
+	else
+	{
+		console.log("Not found fileheader template: " + tmpl_path);
+	}
 }
 
 
