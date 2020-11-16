@@ -2,7 +2,7 @@
  * @Author: JanKinCai
  * @Date:   2020-01-03 22:02:02
  * @Last Modified by:   JanKinCai
- * @Last Modified time: 2020-11-16 22:12:45
+ * @Last Modified time: 2020-11-16 23:10:37
  */
 
 // The module 'vscode' contains the VS Code extensibility API
@@ -20,7 +20,7 @@ const header_max_line: number = 10;
 
 
 // Suffix ---> Template name
-const file_suffix_mapping: any = {
+var file_suffix_mapping: any = {
     ".as": "ActionScript",
     ".scpt": "AppleScript",
     ".asp": "ASP",
@@ -72,11 +72,27 @@ const file_suffix_mapping: any = {
 
 /**
  * Sync template 
+ * 
+ * @return void
  */
-function syncTemplate(config: any) {
+function syncTemplate(config: any): void {
 
 	if (config.custom_template_path && config.remote) {
+
+		/* git clone */
 		child_process.exec(`git clone ${config.remote} ${config.custom_template_path}`);
+
+		/* Read file_suffix_map.json */
+		let file: string = path.join(config.custom_template_path, "file_suffix_map.json");
+
+		if (fs.existsSync(file))
+		{
+			try {
+				Object.assign(file_suffix_mapping, require(file));
+			} catch (error) {
+				console.log(error);
+			}
+		}
 	}
 }
 
@@ -367,7 +383,7 @@ function isHeaderExists(editor: any, config: any): boolean {
 function getTemplatePath(editor: any, config: any, tmplpath: string="", type: string="header"): string {
 	let suffix: string = getSuffix(editor);
 	let name: string = getFileName(editor);
-	let tmpl: string = (config.file_suffix_mapping[name + suffix] || config.file_suffix_mapping[suffix] || file_suffix_mapping[suffix]) + ".tmpl";
+	let tmpl: string = (config.file_suffix_mapping[name + suffix] || config.file_suffix_mapping[suffix] || file_suffix_mapping[name + suffix] || file_suffix_mapping[suffix]) + ".tmpl";
 
 	return path.join(tmplpath || config.custom_template_path , type, tmpl);
 }
