@@ -2,17 +2,15 @@
  * @Author: JanKinCai
  * @Date:   2020-01-03 22:02:02
  * @Last Modified by:   JanKinCai
- * @Last Modified time: 2020-09-28 19:15:06
+ * @Last Modified time: 2020-11-16 21:27:36
  */
 
 // The module 'vscode' contains the VS Code extensibility API
 // Import the module and reference it with the alias vscode in your code below
 import * as vscode from 'vscode';
-// import { SSL_OP_ALL } from 'constants';
-// import { URL } from 'url';
 import * as fs from 'fs';
 import * as moment from 'moment';
-// import { print } from 'util';
+import { config } from 'process';
 
 
 var template = require("art-template");
@@ -129,6 +127,24 @@ function isSuffixList(editor: any, suffixs: any): boolean {
 
 
 /**
+ * Get max header line
+ * 
+ * @param editor(any): editText object.
+ * 
+ * @return number
+ */
+function getMaxHeaderLine(editor: any, config: any): number {
+	let lineCount: number = editor.document.lineCount;
+
+	if (lineCount > config.header_max_line) {
+		lineCount = config.header_max_line;
+	}
+
+	return lineCount;
+}
+
+
+/**
  * getActivePath
  *
  * @param editor(any): editText object.
@@ -177,12 +193,8 @@ function getFileName(editor: any): string {
  */
 function matchLine(editor: any, value: string, max_line: number=header_max_line): number {
 	let document: any = editor.document;
-	let lineCount: number = document.lineCount;
+	let lineCount: number = getMaxHeaderLine(editor, max_line);
 	let i: number = 0;
-
-	if(lineCount > max_line){
-		lineCount = max_line;
-	}
 
 	for(i = 0; i <= lineCount - 1; i++){
 		if (document.lineAt(i).text.toLowerCase().indexOf(value.toLowerCase()) !== -1){
@@ -318,8 +330,13 @@ function getDefaultTemplate(): string {
  * 
  * @return boolean: Judge if the head exists.
  */
-function isHeaderExists(editor: any): boolean {
-	if(matchLine(editor, "@Author:") !== -1 && matchLine(editor, "@Last Modified by:") !== -1){
+function isHeaderExists(editor: any, config: any): boolean {
+
+	if (config.is_header_exists && matchLine(editor, config.is_header_exists, config.header_max_line) !== -1) {
+		return true;
+	}
+
+	if(matchLine(editor, "@Author:", config.header_max_line) !== -1){
 		return true;
 	}
 
@@ -392,14 +409,24 @@ function openTemplate(editor: any, config: any, type: string="header", callback:
  * @return void
  */
 function updateHeader(editor: any, config: any): void {
-	editor.edit((editobj: any) => {
-		let line: number = matchLine(editor, "@Last Modified time:", 8);
-		let start: number = editor.document.lineAt(line).text.indexOf(":") + 1;
-		editobj.replace(new vscode.Range(line, start, line, 100), " " + getDateTime());
+	let maxline: number = getMaxHeaderLine(editor, config);
+	let start: number = 0;
+	let line: number = 0;
 
-		line = matchLine(editor, "@Last Modified by:", 8);
-		start = editor.document.lineAt(line).text.indexOf(":") + 1;
-		editobj.replace(new vscode.Range(line, start, line, 100), "   " + config.author);
+	editor.edit((editobj: any) => {
+		line = matchLine(editor, "@Last Modified time:", maxline);
+
+		if (line !== -1) {
+			start = editor.document.lineAt(line).text.indexOf(":") + 1;
+			editobj.replace(new vscode.Range(line, start, line, 100), " " + getDateTime());				
+		}
+
+		line = matchLine(editor, "@Last Modified by:", maxline);
+
+		if (line !== -1) {
+			start = editor.document.lineAt(line).text.indexOf(":") + 1;
+			editobj.replace(new vscode.Range(line, start, line, 100), "   " + config.author);				
+		}
 	});
 
 	if (vscode.version < "1.43.0") {
@@ -426,7 +453,7 @@ function predefinedVariables(editor: any): any {
 		"fileDirname": pathobj.dir,
 		"fileExtname": pathobj.ext,
 		"cwd": vscode.workspace.rootPath,
-	}
+	};
 }
 
 
@@ -497,7 +524,7 @@ export function activate(context: vscode.ExtensionContext) {
 		let config: any = getConfig();
 		let editor: any = vscode.window.activeTextEditor;
 
-		if(!isHeaderExists(editor)){
+		if(!isHeaderExists(editor, config)){
 			insertHeaderBody(editor, config);
 		}
 	});
@@ -510,12 +537,12 @@ export function activate(context: vscode.ExtensionContext) {
 		let config: any = getConfig();
 		let editor: any = vscode.window.activeTextEditor;
 
-		console.log(vscode.workspace.rootPath);
+		// console.log(vscode.workspace.rootPath);
 
 		// Update Header
 
 		if (isIgnore(editor, config.ignore)) {
-			if(isHeaderExists(editor)){
+			if(isHeaderExists(editor, config)){
 				updateHeader(editor, config);
 			}else if(config.save){
 				insertHeaderBody(editor, config);
@@ -529,7 +556,7 @@ export function activate(context: vscode.ExtensionContext) {
 		let config: any = getConfig();
 		let editor: any = vscode.window.activeTextEditor;
 
-		if(config.open && !isHeaderExists(editor) && isIgnore(editor, config.ignore)){
+		if(config.open && !isHeaderExists(editor, config) && isIgnore(editor, config.ignore)){
 			insertHeaderBody(editor, config);
 		}
 	});

@@ -73,10 +73,20 @@
 					"default": true,
 					"description": "Save file insert template"
 				},
+				"fileheader.header_max_line": {
+					"type": "number",
+					"default": 10,
+					"description": "Search the max line of header comments"
+				},
+				"fileheader.is_header_exists": {
+					"type": "string",
+					"default": "",
+					"description": "Determine whether the header comment is inserted"
+				},
 				"fileheader.body": {
 					"type": "boolean",
 					"default": false,
-					"description": "Insert Body Template"
+					"description": "Insert template body"
 				},
 				"fileheader.ignore": {
 					"type": "array",
