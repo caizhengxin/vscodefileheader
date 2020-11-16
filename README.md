@@ -108,36 +108,36 @@ XML:
 
 ## Extension Settings
 
-```json
+```python
 {
-    // Set author
+    # Set author
     "fileheader.author": "Your name",
 
-    // Set insert body switch, default false
+    # Set insert body switch, default false
     "fileheader.body": true,
 
-    // Set open file to insert header comment, default false
+    # Set open file to insert header comment, default false
     "fileheader.open": true,
 
-    // Set save file to insert header comment, default true
+    # Set save file to insert header comment, default true
     "fileheader.save": true,
 
-    // find max line of header comment, default 10
+    # find max line of header comment, default 10
     "fileheader.header_max_line": 10,
 
-    // Set datetime format, default YYYY-MM-DD HH:mm:ss
-    // moment.js
+    # Set datetime format, default YYYY-MM-DD HH:mm:ss
+    # moment.js
     "fileheader.dateformat": "YYYY-MM-DD HH:mm:ss",
 
-    // Set template mapping
+    # Set template mapping
     "fileheader.file_suffix_mapping": {
         ".pyx": "Python",
     },
 
     "fileheader.ignore": [
-        "*.txt",             // Ignore suffix name
-        "test.py",           // Ignore file
-        "test"               // Ignore dir
+        "*.txt",             # Ignore suffix name
+        "test.py",           # Ignore file
+        "test"               # Ignore dir
     ]
 }
 ```
