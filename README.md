@@ -32,7 +32,7 @@ or
 * Support for ignore suffix
 * Support for manual and automatic insert comment
 * [Support vscode variables](https://code.visualstudio.com/docs/editor/variables-reference)
-* Support remote synchronization
+* Support remote synchronization(install git)
 
 ## Demo
 
@@ -152,8 +152,8 @@ Custom Header template ``template/header/Python.tmpl``:
 # @Author: {{author}}
 # @Date:   {{create_time}}
 # @Email:  {{email}}
-# @Last Modified by:   {{last_modified_by}}
-# @Last Modified time: {{last_modified_time}}
+# @Last Modified by:   JanKinCai
+# @Last Modified time: 2020-11-28 00:22:29
 ```
 
 Custom Body template ``template/body/Python.tmpl``:

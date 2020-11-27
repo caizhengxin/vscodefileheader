@@ -5,6 +5,12 @@ All notable changes to the "vscodefileheader" extension will be documented in th
 Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how to structure this file.
 
 ## [Unreleased]
+
+## [0.6.1] - 2020-11-28
+### Fixed
+
+- Fix custom template bug(#9)
+
 ## [0.6.0] - 2020-11-17
 ### Added
 
@@ -79,7 +85,8 @@ Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how 
 - Add suffix name mapping templates
 - Add ignore suffix
 
-[unreleased]: https://github.com/caizhengxin/vscodefileheader/compare/v0.6.0...HEAD
+[unreleased]: https://github.com/caizhengxin/vscodefileheader/compare/v0.6.1...HEAD
+[0.6.1]: https://github.com/caizhengxin/vscodefileheader/compare/v0.6.0...v0.6.1
 [0.6.0]: https://github.com/caizhengxin/vscodefileheader/compare/v0.5.1...v0.6.0
 [0.5.1]: https://github.com/caizhengxin/vscodefileheader/compare/v0.5.0...v0.5.1
 [0.5.0]: https://github.com/caizhengxin/vscodefileheader/compare/v0.4.1...v0.5.0

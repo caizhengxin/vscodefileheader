@@ -2,7 +2,7 @@
  * @Author: JanKinCai
  * @Date:   2020-01-03 22:02:02
  * @Last Modified by:   JanKinCai
- * @Last Modified time: 2020-11-17 00:41:44
+ * @Last Modified time: 2020-11-28 00:21:09
  */
 
 // The module 'vscode' contains the VS Code extensibility API
@@ -389,7 +389,7 @@ function getTemplatePath(editor: any, config: any, tmplpath: string="", type: st
 	let name: string = getFileName(editor);
 	let tmpl: string = (config.file_suffix_mapping[name + suffix] || config.file_suffix_mapping[suffix] || file_suffix_mapping[name + suffix] || file_suffix_mapping[suffix]) + ".tmpl";
 
-	return path.join(tmplpath || config.custom_template_path , type, tmpl);
+	return path.join(tmplpath || config.custom_template_path || "", type, tmpl);
 }
 
 
