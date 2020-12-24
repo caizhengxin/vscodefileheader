@@ -153,8 +153,8 @@ Custom Header template ``template/header/Python.tmpl``:
 # @Author: {{author}}
 # @Date:   {{create_time}}
 # @Email:  {{email}}
-# @Last Modified by:   JanKinCai
-# @Last Modified time: 2020-12-24 18:12:46
+# @Last Modified by:   {{last_modified_by}}
+# @Last Modified time: {{last_modified_time}}
 ```
 
 Custom Body template ``template/body/Python.tmpl``:
