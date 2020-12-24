@@ -68,6 +68,7 @@ XML:
 * Clojire
 * CSS
 * D
+* Dart
 * Erlang
 * Go
 * Haskell
@@ -153,7 +154,7 @@ Custom Header template ``template/header/Python.tmpl``:
 # @Date:   {{create_time}}
 # @Email:  {{email}}
 # @Last Modified by:   JanKinCai
-# @Last Modified time: 2020-11-28 00:22:29
+# @Last Modified time: 2020-12-24 18:12:46
 ```
 
 Custom Body template ``template/body/Python.tmpl``:
