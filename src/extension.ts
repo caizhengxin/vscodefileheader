@@ -2,7 +2,7 @@
  * @Author: JanKinCai
  * @Date:   2020-01-03 22:02:02
  * @Last Modified by:   JanKinCai
- * @Last Modified time: 2020-11-28 00:21:09
+ * @Last Modified time: 2020-12-24 18:13:45
  */
 
 // The module 'vscode' contains the VS Code extensibility API
@@ -32,7 +32,8 @@ var file_suffix_mapping: any = {
     ".cpp": "C++",
     ".clj": "Clojure",
     ".css": "CSS",
-    ".D": "D",
+		".D": "D",
+		".dart": "Dart",
     ".erl": "Erlang",
     ".go": "Go",
     ".groovy": "Groovy",
@@ -52,8 +53,8 @@ var file_suffix_mapping: any = {
     ".pl": "Perl",
     ".php": "PHP",
     ".py": "Python",
-	".r": "R",
-	".rs": "Rust",
+	  ".r": "R",
+	  ".rs": "Rust",
     ".rst": "RestructuredText",
     ".rb": "Ruby",
     ".scala": "Scala",
@@ -61,12 +62,12 @@ var file_suffix_mapping: any = {
     ".sh": "ShellScript",
     ".sql": "SQL",
     ".tcl": "TCL",
-	".txt": "Text",
-	".ts": "TypeScript",
-	".vue": "Vue",
-	".xml": "XML",
-	".yml": "YAML",
-	".yaml": "YAML"
+	  ".txt": "Text",
+	  ".ts": "TypeScript",
+	  ".vue": "Vue",
+	  ".xml": "XML",
+	  ".yml": "YAML",
+	  ".yaml": "YAML"
 };
 
 
