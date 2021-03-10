@@ -2,7 +2,7 @@
  * @Author: JanKinCai
  * @Date:   2020-01-03 22:02:02
  * @Last Modified by:   JanKinCai
- * @Last Modified time: 2021-02-18 23:17:46
+ * @Last Modified time: 2021-03-10 21:56:30
  */
 
 // The module 'vscode' contains the VS Code extensibility API
@@ -11,6 +11,7 @@ import * as vscode from 'vscode';
 import * as fs from 'fs';
 import * as moment from 'moment';
 import * as child_process from 'child_process';
+import { debug } from 'console';
 
 var template = require("art-template");
 var path = require("path");
@@ -343,6 +344,24 @@ function getDateTime(fmt: string="YYYY-MM-DD HH:mm:ss"): string {
 	return moment().format(fmt);
 }
 
+/**
+ * getFileBirthTime
+ * 
+ * @param fmt(string): DateTime format, default ``YYYY-MM-DD HH:mm:ss``.
+ *
+ * @return string
+ */
+ function getFileBirthTime(editor: any, fmt: string = "YYYY-MM-DD HH:mm:ss"): string {
+	let fileStat: any = fs.statSync(editor.document.fileName);
+	let birthTime: string = fileStat.birthtime;
+
+	if (birthTime.toString().startsWith("1970")) {
+		birthTime = fileStat.ctime; // When birthtime is not available
+	}
+
+	return moment(birthTime).format(fmt);
+}
+
 
 /**
  * getDefaultTemplate
@@ -418,7 +437,7 @@ function openTemplate(editor: any, config: any, type: string="header", callback:
 	}
 	else
 	{
-		console.log("Not found fileheader template: " + tmpl_path);
+		debug("Not found fileheader template: " + tmpl_path);
 	}
 }
 
@@ -496,10 +515,11 @@ function insertHeaderBody(editor: any, config: any): void {
 
 	openTemplate(editor, config, "header", (s:any) => {
 		let date: string = getDateTime();
+		let filedate: string = getFileBirthTime(editor);
 		let ret: any = template.render(s.toString(), Object.assign(
 			{
 				author: config.author,
-				create_time: date,
+				create_time: filedate,
 				last_modified_by: config.author,
 				last_modified_time: date,
 			},
@@ -511,9 +531,11 @@ function insertHeaderBody(editor: any, config: any): void {
 			openTemplate(editor, config, "body", (s:any) => {
 				// ret += s.toString() + "\r\n";
 				ret += template.render(s.toString(), Object.assign(
+					{},
 					config.other_config,
 					predefinedVariables(editor),
 				));
+				ret += "\r\n";
 
 				editor.edit((editobj:any) => {
 					editobj.insert(new vscode.Position(0, 0), ret);
@@ -566,7 +588,7 @@ export function activate(context: vscode.ExtensionContext) {
 	context.subscriptions.push(disposable);
 
 	// Save
-	vscode.workspace.onWillSaveTextDocument(() =>{
+	vscode.workspace.onWillSaveTextDocument((file: any) =>{
 		let editor: any = vscode.window.activeTextEditor;
 
 		// console.log(vscode.workspace.rootPath);
@@ -575,7 +597,10 @@ export function activate(context: vscode.ExtensionContext) {
 
 		if (isIgnore(editor, config.ignore)) {
 			if(isHeaderExists(editor, config)){
-				updateHeader(editor, config);
+				if (file.document.isDirty)
+				{
+					updateHeader(editor, config);
+				}
 			}else if(config.save){
 				insertHeaderBody(editor, config);
 			}
