@@ -2,7 +2,7 @@
  * @Author: JanKinCai
  * @Date:   2020-01-03 22:02:02
  * @Last Modified by:   JanKinCai
- * @Last Modified time: 2021-03-10 15:12:19
+ * @Last Modified time: 2021-03-10 15:50:36
  */
 
 // The module 'vscode' contains the VS Code extensibility API
@@ -343,6 +343,22 @@ function getDateTime(fmt: string="YYYY-MM-DD HH:mm:ss"): string {
 	return moment().format(fmt);
 }
 
+/**
+ * getFileBirthTime
+ * 
+ * @param fmt(string): DateTime format, default ``YYYY-MM-DD HH:mm:ss``.
+ *
+ * @return string
+ */
+ function getFileBirthTime(editor: any, fmt: string = "YYYY-MM-DD HH:mm:ss"): string {
+	let fileStat: any = fs.statSync(editor.document.fileName);
+	let birthTime: string = fileStat.birthtime;
+	if (birthTime.startsWith("1970")) {
+		birthTime = fileStat.ctime; // When birthtime is not available
+	}
+	return moment(birthTime).format(fmt);
+}
+
 
 /**
  * getDefaultTemplate
@@ -496,10 +512,11 @@ function insertHeaderBody(editor: any, config: any): void {
 
 	openTemplate(editor, config, "header", (s:any) => {
 		let date: string = getDateTime();
+		let filedate: string = getFileBirthTime(editor);
 		let ret: any = template.render(s.toString(), Object.assign(
 			{
 				author: config.author,
-				create_time: date,
+				create_time: filedate,
 				last_modified_by: config.author,
 				last_modified_time: date,
 			},
