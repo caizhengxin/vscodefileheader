@@ -1,8 +1,8 @@
 /**
  * @Author: JanKinCai
  * @Date:   2020-01-03 22:02:02
- * @Last Modified by:   jankincai
- * @Last Modified time: 2020-12-25 00:53:43
+ * @Last Modified by:   JanKinCai
+ * @Last Modified time: 2021-02-18 23:17:46
  */
 
 // The module 'vscode' contains the VS Code extensibility API
@@ -509,7 +509,11 @@ function insertHeaderBody(editor: any, config: any): void {
 
 		if(lineCount <= 1){
 			openTemplate(editor, config, "body", (s:any) => {
-				ret += s.toString() + "\r\n";
+				// ret += s.toString() + "\r\n";
+				ret += template.render(s.toString(), Object.assign(
+					config.other_config,
+					predefinedVariables(editor),
+				));
 
 				editor.edit((editobj:any) => {
 					editobj.insert(new vscode.Position(0, 0), ret);
