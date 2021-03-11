@@ -5,6 +5,15 @@ All notable changes to the "vscodefileheader" extension will be documented in th
 Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how to structure this file.
 
 ## [Unreleased]
+### Added
+
+- Add ``Dart`` language template
+
+### Changed
+
+- Update header only file has been modified
+- Use file creation date as the ``create_time``
+- Update template style
 
 ## [0.6.1] - 2020-11-28
 ### Fixed
