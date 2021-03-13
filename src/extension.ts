@@ -2,7 +2,7 @@
  * @Author: JanKinCai
  * @Date:   2020-01-03 22:02:02
  * @Last Modified by:   JanKinCai
- * @Last Modified time: 2021-03-13 17:42:35
+ * @Last Modified time: 2021-03-13 17:54:18
  */
 
 // The module 'vscode' contains the VS Code extensibility API
@@ -68,7 +68,9 @@ var file_suffix_mapping: any = {
     ".vue": "Vue",
     ".xml": "XML",
     ".yml": "YAML",
-    ".yaml": "YAML"
+    ".yaml": "YAML",
+
+	".h": "H"
 };
 
 

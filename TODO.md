@@ -11,10 +11,10 @@
 - [ ] 自定义插入.h文件模板
 
 ```c
-#ifndef __{{fileBasename|upper()}}_H__
-#define __{{fileBasename|upper()}}_H__
+#ifndef __{{fileBasenameNoExtension|upper}}_H__
+#define __{{fileBasenameNoExtension|upper}}_H__
 
-#endif /* __{{fileBasename|upper()}}_H__ */
+#endif /* __{{fileBasenameNoExtension|upper}}_H__ */
 ```
 
 - [ ] vscode编辑器支持打开自定义模板和编辑

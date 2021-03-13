@@ -46,6 +46,10 @@ C:
 
 ![C](images/c.gif)
 
+.h:
+
+![.h](images/c_h.git)
+
 PHP:
 
 ![PHP](images/php.gif)
@@ -57,6 +61,8 @@ Vue:
 XML:
 
 ![XML](images/xml.gif)
+
+[More examples](./images)
 
 ## Language
 
