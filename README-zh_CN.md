@@ -45,7 +45,7 @@ C:
 
 .h:
 
-![.h](images/c_h.git)
+![.h](images/c_h.gif)
 
 PHP:
 
@@ -155,7 +155,7 @@ XML:
 # @Date:   {{create_time}}
 # @Email:  {{email}}
 # @Last Modified by:   JanKinCai
-# @Last Modified time: 2021-03-13 18:05:15
+# @Last Modified time: 2021-03-13 18:09:35
 ```
 
 自定义模板Body ``template/body/Python.tmpl``:

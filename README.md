@@ -48,7 +48,7 @@ C:
 
 .h:
 
-![.h](images/c_h.git)
+![.h](images/c_h.gif)
 
 PHP:
 
