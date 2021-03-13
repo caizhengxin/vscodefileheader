@@ -2,7 +2,7 @@
  * @Author: JanKinCai
  * @Date:   2020-01-03 22:02:02
  * @Last Modified by:   JanKinCai
- * @Last Modified time: 2021-03-10 21:56:30
+ * @Last Modified time: 2021-03-13 17:42:35
  */
 
 // The module 'vscode' contains the VS Code extensibility API
@@ -69,6 +69,19 @@ var file_suffix_mapping: any = {
     ".xml": "XML",
     ".yml": "YAML",
     ".yaml": "YAML"
+};
+
+
+
+template.defaults.imports.upper = function(value: string)
+{
+	return value.toUpperCase();
+};
+
+
+template.defaults.imports.lower = function(value: string)
+{
+	return value.toLowerCase();
 };
 
 
