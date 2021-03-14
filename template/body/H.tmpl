@@ -1,11 +1,11 @@
 #include <stdint.h>
 
-#ifndef __{{fileBasenameNoExtension|upper}}_H__
-#define __{{fileBasenameNoExtension|upper}}_H__
+#ifndef __{{fileBasenameNoExtension | upper | replace "-", "_"}}_H__
+#define __{{fileBasenameNoExtension | upper | replace "-", "_"}}_H__
 
-typedef struct _{{fileBasenameNoExtension}}
+typedef struct _{{fileBasenameNoExtension | replace "-", "_"}}
 {
 
-}{{fileBasenameNoExtension}}_t;
+}{{fileBasenameNoExtension | replace "-", "_"}}_t;
 
-#endif /* __{{fileBasenameNoExtension|upper}}_H__ */
+#endif /* __{{fileBasenameNoExtension | upper | replace "-", "_"}}_H__ */

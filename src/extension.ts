@@ -2,7 +2,7 @@
  * @Author: JanKinCai
  * @Date:   2020-01-03 22:02:02
  * @Last Modified by:   JanKinCai
- * @Last Modified time: 2021-03-13 17:54:18
+ * @Last Modified time: 2021-03-14 12:56:14
  */
 
 // The module 'vscode' contains the VS Code extensibility API
@@ -84,6 +84,12 @@ template.defaults.imports.upper = function(value: string)
 template.defaults.imports.lower = function(value: string)
 {
 	return value.toLowerCase();
+};
+
+
+template.defaults.imports.replace = function(value: string, searchValue: string, replaceValue: string)
+{
+	return value.replace(searchValue, replaceValue)
 };
 
 
