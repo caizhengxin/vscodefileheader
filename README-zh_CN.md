@@ -135,6 +135,7 @@ XML:
     # 设置后缀映射模板
     "fileheader.file_suffix_mapping": {
         ".pyx": "Python",
+        "jkc-*.h": "H"
     },
 
     # 设置过滤不插入模板
@@ -155,7 +156,7 @@ XML:
 # @Date:   {{create_time}}
 # @Email:  {{email}}
 # @Last Modified by:   JanKinCai
-# @Last Modified time: 2021-03-13 18:09:35
+# @Last Modified time: 2021-03-15 22:14:22
 ```
 
 自定义模板Body ``template/body/Python.tmpl``:

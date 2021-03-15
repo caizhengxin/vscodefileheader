@@ -141,6 +141,7 @@ XML:
     # Set template mapping
     "fileheader.file_suffix_mapping": {
         ".pyx": "Python",
+        "jkc-*.h": "H"
     },
 
     "fileheader.ignore": [
@@ -149,6 +150,7 @@ XML:
         "test"               # Ignore dir
     ]
 }
+
 ```
 
 ### Custom template(Add Email)

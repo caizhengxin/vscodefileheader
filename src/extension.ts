@@ -2,7 +2,7 @@
  * @Author: JanKinCai
  * @Date:   2020-01-03 22:02:02
  * @Last Modified by:   JanKinCai
- * @Last Modified time: 2021-03-14 12:56:14
+ * @Last Modified time: 2021-03-15 22:11:37
  */
 
 // The module 'vscode' contains the VS Code extensibility API
@@ -104,10 +104,14 @@ function syncTemplate(config: any): void {
 
 		if (!fs.existsSync(config.custom_template_path)) {
 			fs.mkdirSync(config.custom_template_path, {recursive: true});
-		}
 
-		/* git clone */
-		child_process.exec(`git clone ${config.remote} ${config.custom_template_path}`);
+			/* git clone */
+			child_process.exec(`git clone ${config.remote} ${config.custom_template_path}`);
+		}
+		else {
+			child_process.exec(`cd ${config.custom_template_path}`);
+			child_process.exec(`git pull origin master`);
+		}
 
 		/* Read file_suffix_map.json */
 		let file: string = path.join(config.custom_template_path, "file_suffix_map.json");
@@ -117,7 +121,7 @@ function syncTemplate(config: any): void {
 			try {
 				Object.assign(file_suffix_mapping, require(file));
 			} catch (error) {
-				console.log(error);
+				debug(error);
 			}
 		}
 	}
@@ -345,12 +349,11 @@ function isIgnore(editor: any, ignore: string[]): boolean {
 		let reg: any = new RegExp(ige.replace("*", ".*"));
 
 		if(reg.test(pathobj.base) || reg.test(path.join(pathobj.dir, pathobj.base))){
-			return false;
+			return true;
 		}
-
 	}
 
-	return true;
+	return false;
 }
 
 
@@ -428,7 +431,28 @@ function isHeaderExists(editor: any, config: any): boolean {
 function getTemplatePath(editor: any, config: any, tmplpath: string="", type: string="header"): string {
 	let suffix: string = getSuffix(editor);
 	let name: string = getFileName(editor);
-	let tmpl: string = (config.file_suffix_mapping[name + suffix] || config.file_suffix_mapping[suffix] || file_suffix_mapping[name + suffix] || file_suffix_mapping[suffix]) + ".tmpl";
+	let tmpl: string = "";
+
+	/**
+	 * file_suffix_mapping = {
+	 *     ".pyx": "Python",
+	 *     "setup.py": "Setup",
+	 *     "jkc*": "Python",
+	 * } 
+	 */
+
+	for (let v in config.file_suffix_mapping) {
+		let reg: any = new RegExp("^" + v.replace("*", ".*"));
+
+		if (reg.test(name + suffix) || reg.test(suffix)) {
+			tmpl = config.file_suffix_mapping[v] + ".tmpl"
+			break;
+		}
+	}
+
+	if (!tmpl) {
+		tmpl = (file_suffix_mapping[name + suffix] || file_suffix_mapping[suffix]) + ".tmpl";
+	}
 
 	return path.join(tmplpath || config.custom_template_path || "", type, tmpl);
 }
@@ -458,7 +482,7 @@ function openTemplate(editor: any, config: any, type: string="header", callback:
 	}
 	else
 	{
-		debug("Not found fileheader template: " + tmpl_path);
+		debug("Not found fileheader template: " + editor.document.fileName);
 	}
 }
 
@@ -616,7 +640,7 @@ export function activate(context: vscode.ExtensionContext) {
 
 		// Update Header
 
-		if (isIgnore(editor, config.ignore)) {
+		if (!isIgnore(editor, config.ignore)) {
 			if(isHeaderExists(editor, config)){
 				if (file.document.isDirty)
 				{
@@ -633,7 +657,7 @@ export function activate(context: vscode.ExtensionContext) {
 	vscode.workspace.onDidOpenTextDocument(() => {
 		let editor: any = vscode.window.activeTextEditor;
 
-		if(config.open && !isHeaderExists(editor, config) && isIgnore(editor, config.ignore)){
+		if(config.open && !isHeaderExists(editor, config) && !isIgnore(editor, config.ignore)){
 			insertHeaderBody(editor, config);
 		}
 	});
