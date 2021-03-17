@@ -2,7 +2,7 @@
  * @Author: JanKinCai
  * @Date:   2020-01-03 22:02:02
  * @Last Modified by:   JanKinCai
- * @Last Modified time: 2021-03-15 22:11:37
+ * @Last Modified time: 2021-03-17 09:31:17
  */
 
 // The module 'vscode' contains the VS Code extensibility API
@@ -567,6 +567,7 @@ function insertHeaderBody(editor: any, config: any): void {
 				create_time: filedate,
 				last_modified_by: config.author,
 				last_modified_time: date,
+				template: getDefaultTemplate(),
 			},
 			config.other_config,
 			predefinedVariables(editor),
@@ -576,7 +577,9 @@ function insertHeaderBody(editor: any, config: any): void {
 			openTemplate(editor, config, "body", (s:any) => {
 				// ret += s.toString() + "\r\n";
 				ret += template.render(s.toString(), Object.assign(
-					{},
+					{
+						template: getDefaultTemplate(),
+					},
 					config.other_config,
 					predefinedVariables(editor),
 				));
