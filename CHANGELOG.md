@@ -5,6 +5,16 @@ All notable changes to the "vscodefileheader" extension will be documented in th
 Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how to structure this file.
 
 ## [Unreleased]
+
+## [0.8.0] - 2021-03-18
+### Added
+
+- Add case conversion support
+- Add template function replace
+- Add C language header file template
+- Add support for wildcard * template mapping
+- Add template inheritance
+
 ## [0.7.0] - 2021-03-11
 ### Added
 
@@ -95,7 +105,8 @@ Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how 
 - Add suffix name mapping templates
 - Add ignore suffix
 
-[unreleased]: https://github.com/caizhengxin/vscodefileheader/compare/v0.7.0...HEAD
+[unreleased]: https://github.com/caizhengxin/vscodefileheader/compare/v0.8.0...HEAD
+[0.8.0]: https://github.com/caizhengxin/vscodefileheader/compare/v0.7.0...v0.8.0
 [0.7.0]: https://github.com/caizhengxin/vscodefileheader/compare/v0.6.1...v0.7.0
 [0.6.1]: https://github.com/caizhengxin/vscodefileheader/compare/v0.6.0...v0.6.1
 [0.6.0]: https://github.com/caizhengxin/vscodefileheader/compare/v0.5.1...v0.6.0
