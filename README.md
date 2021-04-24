@@ -36,33 +36,13 @@ or
 * [Support vscode variables](https://code.visualstudio.com/docs/editor/variables-reference)
 * Support remote synchronization(install git)
 
-## Demo
+## Example
 
-Python:
+![example](./images/example.gif)
 
-![Python](images/python.gif)
+![example](./images/custom-example.gif)
 
-C:
-
-![C](images/c.gif)
-
-.h:
-
-![.h](images/c_h.gif)
-
-PHP:
-
-![PHP](images/php.gif)
-
-Vue:
-
-![Vue](images/vue.gif)
-
-XML:
-
-![XML](images/xml.gif)
-
-[More examples](./images)
+[More examples](./demo)
 
 ## Language
 

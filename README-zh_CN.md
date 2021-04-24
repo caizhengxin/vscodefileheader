@@ -35,31 +35,11 @@ or
 
 ## 例子
 
-Python:
+![example](./images/example.gif)
 
-![Python](images/python.gif)
+![example](./images/custom-example.gif)
 
-C:
-
-![C](images/c.gif)
-
-.h:
-
-![.h](images/c_h.gif)
-
-PHP:
-
-![PHP](images/php.gif)
-
-Vue:
-
-![Vue](images/vue.gif)
-
-XML:
-
-![XML](images/xml.gif)
-
-[更多的例子](./images)
+[更多例子](./demo)
 
 ## Language
 
@@ -156,7 +136,7 @@ XML:
 # @Date:   {{create_time}}
 # @Email:  {{email}}
 # @Last Modified by:   JanKinCai
-# @Last Modified time: 2021-03-15 22:14:22
+# @Last Modified time: 2021-04-25 01:48:27
 ```
 
 自定义模板Body ``template/body/Python.tmpl``:
