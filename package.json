@@ -90,7 +90,9 @@
 				},
 				"fileheader.ignore": {
 					"type": "array",
-					"default": [],
+					"default": [
+						".tmpl"
+					],
 					"description": "Ignore file"
 				},
 				"fileheader.custom_template_path": {

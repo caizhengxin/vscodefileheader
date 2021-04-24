@@ -2,24 +2,22 @@
  * @Author: JanKinCai
  * @Date:   2021-04-22 23:41:46
  * @Last Modified by:   JanKinCai
- * @Last Modified time: 2021-04-24 16:03:38
+ * @Last Modified time: 2021-04-24 23:05:28
  */
 import * as vscode from 'vscode';
 import * as path from 'path';
 import * as fs from 'fs';
-import { setFlagsFromString } from 'v8';
+import * as art_template from 'art-template';
+import * as editor from './editor';
 
 
-class Template {
-    editor: any;
-    config: any;
+class Template extends editor.editorObject {
     default_tmpl_path: string;
     file_suffix_mapping: any;
 
     constructor(editor: any, config: any, file_suffix_mapping: any) {
+        super(editor, config);
         this.default_tmpl_path = this.getDefaultTemplatePath();
-        this.editor = editor;
-        this.config = config;
         this.file_suffix_mapping = file_suffix_mapping;
     }
 
@@ -61,7 +59,7 @@ class Template {
      * 
      * @param type (string): header/body
      * 
-     * @return string
+     * @return string | undefined
      */
     getTemplatePath(type: string="header"): string | undefined {
         let suffix: string = this.getSuffix();
@@ -142,7 +140,7 @@ class Template {
         this._open(name, "body");
     }
 
-    open() {
+    open(): void {
         let tmplpath = this.getTemplatePath("header");
 
         this._open2(tmplpath, "header");
@@ -152,12 +150,135 @@ class Template {
         this._open2(tmplpath, "body");
     }
 
-    insert() {
-        
+    private deleteEditorComments(): void {
+        if(this.isSuffix(".php")){
+            this.deleteEditorComment("<?php", 2);
+        }else if(this.isSuffixList([".py", ".pxd", ".pyx"])){
+            this.deleteEditorComment("# -*- coding: utf-8 -*-", 1);
+        }    
     }
 
-    toString() {
+    private insertEndComments(): void {
+        let lineCount: number = this.editor.document.lineCount;
 
+        if(this.config.body && lineCount <= 1){
+            if(this.isSuffix(".php")){
+                this.insertEditorComment("?>");
+            }
+        }    
+    }
+
+    /**
+     * Support Predefined variables: https://code.visualstudio.com/docs/editor/variables-reference
+     */
+    private predefinedVariables(): any {
+        const rfd: any = this.pathobj.dir.split(path.sep);
+
+        return {
+            "workspaceFolder": vscode.workspace.workspaceFolders,
+            "workspaceFolderBasename": vscode.workspace.name,
+            "file": this.editor.document.fileName,
+            "relativeFile": path.join(rfd[rfd.length - 1], this.pathobj.base),
+            "relativeFileDirname": rfd[rfd.length - 1],
+            "fileBasename": this.pathobj.base,
+            "fileBasenameNoExtension": this.pathobj.name,
+            "fileDirname": this.pathobj.dir,
+            "fileExtname": this.pathobj.ext,
+            "cwd": vscode.workspace.workspaceFolders,
+        };    
+    }
+
+    private async _insert()
+    {
+        let lineCount: number = this.editor.document.lineCount;
+        let tmplpath: string | undefined = this.getTemplatePath("header");
+        let tmplpath_body: string | undefined = this.getTemplatePath("body");
+
+        if (tmplpath)
+        {
+            const text = await vscode.workspace.fs.readFile(vscode.Uri.file(tmplpath));
+
+            let ret: any = art_template.render(text.toString(), Object.assign(
+                {
+                    author: this.config.author,
+                    create_time: this.getFileBirthDateTime(),
+                    last_modified_by: this.config.author,
+                    last_modified_time: this.getDateTime(),
+                    template: this.getDefaultTemplatePath(),
+                },
+                this.config.other_config,
+                this.predefinedVariables(),
+            ));
+
+            if (lineCount <= 1 && tmplpath_body) {
+                const bodytext = await vscode.workspace.fs.readFile(vscode.Uri.file(tmplpath_body));
+
+                ret += art_template.render(bodytext.toString(), Object.assign(
+                    {
+                        template: this.getDefaultTemplatePath(),
+                    },
+                    this.config.other_config,
+                    this.predefinedVariables(),
+                ));
+                // ret += "\r\n";    
+            }
+
+            this.editor.edit(editobj => {
+                editobj.insert(new vscode.Position(0, 0), ret);
+            });
+
+            this.editor.document.save();
+        }
+        else
+        {
+            console.debug("Not found fileheader template: " + this.editor.document.fileName);
+        }
+    }
+
+    insert(): void {
+        if (!this.isHeaderExists()) {
+            this.deleteEditorComments();
+            this._insert();
+            this.insertEndComments();                
+        }
+    }
+
+    private _update(): void {
+        let start: number = 0;
+        let line: number = 0;
+
+        this.editor.edit(editobj => {
+           line = this.findStringLine("@Last Modified time:");
+
+           if (line !== -1) {
+                start = this.editor.document.lineAt(line).text.indexOf(":") + 1;
+                editobj.replace(new vscode.Range(line, start, line, 100), " " + this.getDateTime());				
+            }
+
+            line = this.findStringLine("@Last Modified by:");
+
+            if (line !== -1) {
+                start = this.editor.document.lineAt(line).text.indexOf(":") + 1;
+                editobj.replace(new vscode.Range(line, start, line, 100), "   " + this.config.author);				
+            }
+
+            if (vscode.version < "1.43.0") {
+                this.editor.document.save();	
+            }        
+        });
+    }
+
+    update(): void {
+        if (!this.isIgnore(this.config.ignore)) {
+            if (this.isHeaderExists()) {
+                if (this.editor.document.isDirty) {
+                    this._update();
+                }
+            }
+            else if (this.config.save || this.config.open) {
+                this.insert();
+            }
+        }
     }
 }
 
