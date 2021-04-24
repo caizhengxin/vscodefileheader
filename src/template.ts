@@ -2,7 +2,7 @@
  * @Author: JanKinCai
  * @Date:   2021-04-22 23:41:46
  * @Last Modified by:   JanKinCai
- * @Last Modified time: 2021-04-25 01:05:39
+ * @Last Modified time: 2021-04-25 01:22:06
  */
 import * as vscode from 'vscode';
 import * as path from 'path';
@@ -175,7 +175,7 @@ class Template extends editor.editorObject {
         const rfd: any = this.pathobj.dir.split(path.sep);
 
         return {
-            "workspaceFolder": vscode.workspace.workspaceFolders,
+            "workspaceFolder": vscode.workspace.rootPath,
             "workspaceFolderBasename": vscode.workspace.name,
             "file": this.editor.document.fileName,
             "relativeFile": path.join(rfd[rfd.length - 1], this.pathobj.base),
@@ -184,7 +184,7 @@ class Template extends editor.editorObject {
             "fileBasenameNoExtension": this.pathobj.name,
             "fileDirname": this.pathobj.dir,
             "fileExtname": this.pathobj.ext,
-            "cwd": vscode.workspace.workspaceFolders,
+            "cwd": vscode.workspace.rootPath,
         };    
     }
 

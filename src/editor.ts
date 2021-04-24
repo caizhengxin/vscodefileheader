@@ -2,7 +2,7 @@
  * @Author: JanKinCai
  * @Date:   2021-04-24 16:57:18
  * @Last Modified by:   JanKinCai
- * @Last Modified time: 2021-04-25 00:38:31
+ * @Last Modified time: 2021-04-25 01:40:20
  */
 import * as path from 'path';
 import * as vscode from 'vscode';
@@ -27,7 +27,11 @@ class editorObject {
 
     constructor(editor: any, config: any) {
         this.editor = editor;
-        this.pathobj = path.parse(this.editor.document.fileName);
+        this.pathobj = undefined;
+
+        if (this.editor) {
+            this.pathobj = path.parse(this.editor.document.fileName);
+        }
         this.config = config || vscode.workspace.getConfiguration("fileheader");
         this.datetimeFormat = config.dateformat
     }

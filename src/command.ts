@@ -2,7 +2,7 @@
  * @Author: JanKinCai
  * @Date:   2021-04-24 16:24:09
  * @Last Modified by:   JanKinCai
- * @Last Modified time: 2021-04-25 01:04:59
+ * @Last Modified time: 2021-04-25 01:31:07
  */
 import * as child_process from 'child_process';
 import * as vscode from 'vscode';
@@ -12,7 +12,8 @@ import * as template from './template';
 
 
 function createTemplateCommand(config: any, file_suffix_mapping: any): void {
-    let tmplobj = new template.Template(undefined, config, file_suffix_mapping);
+    let editor: any = vscode.window.activeTextEditor;
+    let tmplobj = new template.Template(editor, config, file_suffix_mapping);
 
     if (config.custom_template_path) {
         vscode.window.showInputBox({ignoreFocusOut: true, password: false, prompt: "Please type template name"}).then(tmplname => {
