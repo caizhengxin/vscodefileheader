@@ -2,7 +2,7 @@
  * @Author: JanKinCai
  * @Date:   2021-04-24 16:24:09
  * @Last Modified by:   JanKinCai
- * @Last Modified time: 2021-04-24 23:33:09
+ * @Last Modified time: 2021-04-25 01:04:59
  */
 import * as child_process from 'child_process';
 import * as vscode from 'vscode';
@@ -100,7 +100,7 @@ function updateTemplateCommand2(config: any, file_suffix_mapping: any): void {
     if (editor) {
         let tmplobj = new template.Template(editor, config, file_suffix_mapping);
 
-        tmplobj.update();
+        tmplobj.update2();
     }
 }
 

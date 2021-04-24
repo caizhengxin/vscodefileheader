@@ -2,7 +2,7 @@
  * @Author: JanKinCai
  * @Date:   2021-04-22 23:41:46
  * @Last Modified by:   JanKinCai
- * @Last Modified time: 2021-04-25 00:55:25
+ * @Last Modified time: 2021-04-25 01:05:39
  */
 import * as vscode from 'vscode';
 import * as path from 'path';
@@ -243,12 +243,9 @@ class Template extends editor.editorObject {
 
     insert(): void {
         if (!this.isHeaderExists()) {
-            console.debug(">>>>>>insert start");
             this.deleteEditorComments();
-            console.debug(">>>>>>insert start");
             this._insert();
             this.insertEndComments();                
-            console.debug(">>>>>>insert end");
         }
     }
 
@@ -284,7 +281,20 @@ class Template extends editor.editorObject {
                     this._update();
                 }
             }
-            else if (this.config.save || this.config.open) {
+            else if (this.config.save) {
+                this.insert();
+            }
+        }
+    }
+
+    update2(): void {
+        if (!this.isIgnore(this.config.ignore)) {
+            if (this.isHeaderExists()) {
+                if (this.editor.document.isDirty) {
+                    this._update();
+                }
+            }
+            else if (this.config.open) {
                 this.insert();
             }
         }
