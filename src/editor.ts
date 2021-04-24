@@ -2,7 +2,7 @@
  * @Author: JanKinCai
  * @Date:   2021-04-24 16:57:18
  * @Last Modified by:   JanKinCai
- * @Last Modified time: 2021-04-24 22:46:59
+ * @Last Modified time: 2021-04-25 00:38:31
  */
 import * as path from 'path';
 import * as vscode from 'vscode';
@@ -46,7 +46,7 @@ class editorObject {
 
     isIgnore(s: string[]): boolean {
         for(let ige of s){
-            let reg: any = new RegExp(ige.replace("*", ".*"));
+            let reg: any = new RegExp(ige.replace(".", "\\.").replace("*", ".*"));
     
             if(reg.test(this.pathobj.base) || reg.test(path.join(this.pathobj.dir, this.pathobj.base))){
                 return true;
@@ -83,8 +83,8 @@ class editorObject {
         return Math.min(this.editor.document.lineCount, this.config.header_max_line);
     }
 
-    findStringLine(text: string, max_line: number = 0): number {
-        let lineCount: number = Math.min(max_line, this.editor.document.lineCount);
+    findStringLine(text: string, max_line: number = this.config.header_max_line): number {
+        let lineCount: number =  Math.min(max_line, this.editor.document.lineCount);
         let i: number = 0;
     
         for(i = 0; i <= lineCount - 1; i++){

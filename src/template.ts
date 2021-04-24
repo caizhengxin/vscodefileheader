@@ -2,7 +2,7 @@
  * @Author: JanKinCai
  * @Date:   2021-04-22 23:41:46
  * @Last Modified by:   JanKinCai
- * @Last Modified time: 2021-04-24 23:05:28
+ * @Last Modified time: 2021-04-25 00:55:25
  */
 import * as vscode from 'vscode';
 import * as path from 'path';
@@ -67,7 +67,7 @@ class Template extends editor.editorObject {
         let tmpl: string = "";
     
         for (let v in this.config.file_suffix_mapping) {
-            let reg: any = new RegExp("^" + v.replace("*", ".*") + "$");
+            let reg: any = new RegExp("^" + v.replace(".", "\\.").replace("*", ".*") + "$");
     
             if (reg.test(name + suffix) || reg.test(suffix)) {
                 tmpl = this.config.file_suffix_mapping[v] + ".tmpl"
@@ -193,41 +193,47 @@ class Template extends editor.editorObject {
         let lineCount: number = this.editor.document.lineCount;
         let tmplpath: string | undefined = this.getTemplatePath("header");
         let tmplpath_body: string | undefined = this.getTemplatePath("body");
+        let ret: string = "";
 
         if (tmplpath)
         {
             const text = await vscode.workspace.fs.readFile(vscode.Uri.file(tmplpath));
 
-            let ret: any = art_template.render(text.toString(), Object.assign(
-                {
-                    author: this.config.author,
-                    create_time: this.getFileBirthDateTime(),
-                    last_modified_by: this.config.author,
-                    last_modified_time: this.getDateTime(),
-                    template: this.getDefaultTemplatePath(),
-                },
-                this.config.other_config,
-                this.predefinedVariables(),
-            ));
-
-            if (lineCount <= 1 && tmplpath_body) {
-                const bodytext = await vscode.workspace.fs.readFile(vscode.Uri.file(tmplpath_body));
-
-                ret += art_template.render(bodytext.toString(), Object.assign(
+            if (text.toString().trim() !== "") {
+                ret = art_template.render(text.toString(), Object.assign(
                     {
+                        author: this.config.author,
+                        create_time: this.getFileBirthDateTime(),
+                        last_modified_by: this.config.author,
+                        last_modified_time: this.getDateTime(),
                         template: this.getDefaultTemplatePath(),
                     },
                     this.config.other_config,
                     this.predefinedVariables(),
                 ));
-                // ret += "\r\n";    
             }
 
-            this.editor.edit(editobj => {
-                editobj.insert(new vscode.Position(0, 0), ret);
-            });
+            if (lineCount <= 1 && tmplpath_body) {
+                const bodytext = await vscode.workspace.fs.readFile(vscode.Uri.file(tmplpath_body));
 
-            this.editor.document.save();
+                if (bodytext.toString().trim() !== "") {
+                    ret += art_template.render(bodytext.toString(), Object.assign(
+                        {
+                            template: this.getDefaultTemplatePath(),
+                        },
+                        this.config.other_config,
+                        this.predefinedVariables(),
+                    ));    
+                }
+            }
+
+            if (ret.trim() !== "") {
+                this.editor.edit(editobj => {
+                    editobj.insert(new vscode.Position(0, 0), ret);
+                });
+    
+                this.editor.document.save();       
+            }
         }
         else
         {
@@ -237,9 +243,12 @@ class Template extends editor.editorObject {
 
     insert(): void {
         if (!this.isHeaderExists()) {
+            console.debug(">>>>>>insert start");
             this.deleteEditorComments();
+            console.debug(">>>>>>insert start");
             this._insert();
             this.insertEndComments();                
+            console.debug(">>>>>>insert end");
         }
     }
 
