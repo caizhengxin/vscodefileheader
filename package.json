@@ -118,6 +118,14 @@
 			{
 				"command": "extension.synctemplate",
 				"title": "File Header: Sync template"
+			},
+			{
+				"command": "extension.opentemplate",
+				"title": "File Header: Open template"
+			},
+			{
+				"command": "extension.createtemplate",
+				"title": "File Header: Create template"
 			}
 		],
 		"keybindings": [

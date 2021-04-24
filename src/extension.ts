@@ -2,7 +2,7 @@
  * @Author: JanKinCai
  * @Date:   2020-01-03 22:02:02
  * @Last Modified by:   JanKinCai
- * @Last Modified time: 2021-03-17 09:31:17
+ * @Last Modified time: 2021-04-24 15:59:55
  */
 
 // The module 'vscode' contains the VS Code extensibility API
@@ -12,6 +12,7 @@ import * as fs from 'fs';
 import * as moment from 'moment';
 import * as child_process from 'child_process';
 import { debug } from 'console';
+import * as Template from './template';
 
 var template = require("art-template");
 var path = require("path");
@@ -632,6 +633,34 @@ export function activate(context: vscode.ExtensionContext) {
 
 	disposable = vscode.commands.registerCommand('extension.synctemplate', () => {
 		syncTemplate(config);
+	});
+	context.subscriptions.push(disposable);
+
+	disposable = vscode.commands.registerCommand('extension.createtemplate', () => {
+		let tmplobj = new Template.Template(undefined, config, file_suffix_mapping);
+
+		vscode.window.showInputBox({ignoreFocusOut: true, password: false, prompt: "Please type template name"}).then(tmplname => {
+			if (tmplname === undefined || tmplname.trim() === '') {
+				vscode.window.showInformationMessage("Please type template name")
+			}
+			else {
+				tmplobj.create(tmplname);
+			}
+		});
+	});
+	context.subscriptions.push(disposable);
+
+	disposable = vscode.commands.registerCommand('extension.opentemplate', () => {
+		let editor: any = vscode.window.activeTextEditor;
+
+		if (editor) {
+			let tmplobj = new Template.Template(editor, config, file_suffix_mapping);
+
+			tmplobj.open();
+		}
+		else {
+			vscode.window.showInformationMessage("No active window");
+		}
 	});
 	context.subscriptions.push(disposable);
 
