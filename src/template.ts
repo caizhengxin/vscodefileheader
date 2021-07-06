@@ -2,7 +2,7 @@
  * @Author: JanKinCai
  * @Date:   2021-04-22 23:41:46
  * @Last Modified by:   JanKinCai
- * @Last Modified time: 2021-04-25 01:22:06
+ * @Last Modified time: 2021-07-06 13:39:42
  */
 import * as vscode from 'vscode';
 import * as path from 'path';
@@ -80,7 +80,7 @@ class Template extends editor.editorObject {
         }    
 
         if (tmpl) {
-            let tmplpath = path.join(this.config.custom_template_path, type, tmpl);
+            let tmplpath = path.join(this.config.custom_template_path || "", type, tmpl);
 
             if (fs.existsSync(tmplpath)) {
                 return tmplpath;
