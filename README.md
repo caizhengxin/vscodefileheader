@@ -244,7 +244,7 @@ Custom Header template ``template/header/Python.tmpl``:
     # set ssh, https://jdblischak.github.io/2014-09-18-chicago/novice/git/05-sshkeys.html
     # "fileheader.remote": "git@github.com:caizhengxin/vscodefileheader.git"
 
-    "fileheader.remote": "https://github.com/caizhengxin/vscodefileheader.git"
+    "fileheader.remote": "https://github.com/caizhengxin/fileheader-template.git"
 }
 ```
 
@@ -259,6 +259,8 @@ $ f5 # Enter Developer or Debug mode
 ## PUblish package
 
 ```bash
+$ sudo npm i vsce -g
+$ vsce login <publisher name>
 $ vsce publish
 ```
 
