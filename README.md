@@ -185,6 +185,9 @@ Custom Header template template/header/JKC.tmpl:
 
 ```conf
 # @Name: {{name}}
+# @Time: {{last_modified_time}}
+# @Last Modified Author: {{name}}
+# @Last Modified Time: {{last_modified_time}}
 ```
 
 Custom Header template template/body/JKC.tmpl:
@@ -197,6 +200,8 @@ settings:
 ```python
 {
     "fileheader.is_header_exists": "@Name:",
+    "fileheader.update_last_modified_time_flags": "@Last Modified Time:"
+    "fileheader.update_last_modified_author_flags": "@Last Modified Author:"
     "fileheader.other_config": {
         "name": "jankincai",
     },
@@ -241,6 +246,20 @@ Custom Header template ``template/header/Python.tmpl``:
 
     "fileheader.remote": "https://github.com/caizhengxin/vscodefileheader.git"
 }
+```
+
+## Developer
+
+```bash
+$ git clone https://github.com/caizhengxin/vscodefileheader.git
+$ code vscodefileheader
+$ f5 # Enter Developer or Debug mode
+```
+
+## PUblish package
+
+```bash
+$ vsce publish
 ```
 
 [marketplace]: https://marketplace.visualstudio.com/items?itemName=jankincai.vscodefileheader#review-details

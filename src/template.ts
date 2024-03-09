@@ -254,14 +254,14 @@ class Template extends editor.editorObject {
         let line: number = 0;
 
         this.editor.edit(editobj => {
-           line = this.findStringLine("@Last Modified time:");
+           line = this.findStringLine(this.config.update_last_modified_time_flags);
 
            if (line !== -1) {
                 start = this.editor.document.lineAt(line).text.indexOf(":") + 1;
                 editobj.replace(new vscode.Range(line, start, line, 100), " " + this.getDateTime());				
             }
 
-            line = this.findStringLine("@Last Modified by:");
+            line = this.findStringLine(this.config.update_last_modified_author_flags);
 
             if (line !== -1) {
                 start = this.editor.document.lineAt(line).text.indexOf(":") + 1;

@@ -83,6 +83,16 @@
 					"default": null,
 					"description": "Determine whether the header comment is inserted"
 				},
+				"fileheader.update_last_modified_author_flags": {
+					"type": "string",
+					"default": "@Last Modified by:",
+					"description": "Determine whether the header comment is inserted"
+				},
+				"fileheader.update_last_modified_time_flags": {
+					"type": "string",
+					"default": "@Last Modified time:",
+					"description": "Determine whether the header comment is inserted"
+				},
 				"fileheader.body": {
 					"type": "boolean",
 					"default": false,
