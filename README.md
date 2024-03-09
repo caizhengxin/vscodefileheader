@@ -260,12 +260,12 @@ $ f5 # Enter Developer or Debug mode
 
 ```bash
 $ sudo npm i vsce -g
-$ vsce login <publisher name>
+$ vsce login jankincai
 $ vsce publish
 ```
 
 [marketplace]: https://marketplace.visualstudio.com/items?itemName=jankincai.vscodefileheader#review-details
-[marketplace-badge]: https://vsmarketplacebadge.apphb.com/version-short/jankincai.vscodefileheader.svg?style=flat-square
+[marketplace-badge]: https://vsmarketplacebadges.dev/version-short/jankincai.vscodefileheader.svg?style=flat-square
 [install-badge]: https://img.shields.io/visual-studio-marketplace/i/jankincai.vscodefileheader?style=flat-square
 [download-badge]: https://img.shields.io/visual-studio-marketplace/d/jankincai.vscodefileheader?style=flat-square
 [size-badge]: https://img.shields.io/github/languages/code-size/caizhengxin/vscodefileheader?style=flat-square
