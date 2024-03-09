@@ -265,7 +265,7 @@ $ vsce publish
 ```
 
 [marketplace]: https://marketplace.visualstudio.com/items?itemName=jankincai.vscodefileheader#review-details
-[marketplace-badge]: https://vsmarketplacebadges.dev/version-short/jankincai.vscodefileheader.svg?style=flat-square
+[marketplace-badge]: https://vsmarketplacebadges.dev/version-short/jankincai.vscodefileheader.png?style=flat-square
 [install-badge]: https://img.shields.io/visual-studio-marketplace/i/jankincai.vscodefileheader?style=flat-square
 [download-badge]: https://img.shields.io/visual-studio-marketplace/d/jankincai.vscodefileheader?style=flat-square
 [size-badge]: https://img.shields.io/github/languages/code-size/caizhengxin/vscodefileheader?style=flat-square
