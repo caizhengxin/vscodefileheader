@@ -2,7 +2,7 @@
  * @Author: JanKinCai
  * @Date:   2021-04-22 23:41:46
  * @Last Modified by:   JanKinCai
- * @Last Modified time: 2021-07-06 13:39:42
+ * @Last Modified time: 2024-03-09 22:39:14
  */
 import * as vscode from 'vscode';
 import * as path from 'path';
@@ -210,7 +210,7 @@ class Template extends editor.editorObject {
                     },
                     this.config.other_config,
                     this.predefinedVariables(),
-                ));
+                ), { escape: false });
             }
 
             if (lineCount <= 1 && tmplpath_body) {
@@ -223,7 +223,7 @@ class Template extends editor.editorObject {
                         },
                         this.config.other_config,
                         this.predefinedVariables(),
-                    ));    
+                    ), { escape: false });    
                 }
             }
 
