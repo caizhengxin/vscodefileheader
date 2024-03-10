@@ -36,6 +36,15 @@ or
 * [Support vscode variables](https://code.visualstudio.com/docs/editor/variables-reference)
 * Support remote synchronization(install git)
 
+## Command
+
+By `ctrl + shift + p` bring up the vscode command screen and type `File Header` and have the following command.
+
+- `File Header: Add header comment`: This is used when the `ctrl + s` command is disabled. 
+- `File Header: Crate template`: You must configure a custom template path, and then crate new template.
+- `File Header: Open template`: You must be in the current language file to open the corresponding template, and changing the default template is generally not recommmended.
+- `File Header: Sync template`: You must configure a custom git remote path for template synchronization (git clone xxx).
+
 ## Example
 
 ![example](./images/example.gif)
@@ -92,7 +101,7 @@ or
     "fileheader.author": "JanKinCai",
 }
 
-# Save file or ``ctrl + alt + i`` insert comment
+# `ctrl +s` Save file insert comment
 ```
 
 ## Extension Settings
@@ -200,8 +209,8 @@ settings:
 ```python
 {
     "fileheader.is_header_exists": "@Name:",
-    "fileheader.update_last_modified_time_flags": "@Last Modified Time:"
-    "fileheader.update_last_modified_author_flags": "@Last Modified Author:"
+    "fileheader.update_last_modified_time_flags": "@Last Modified Time:",
+    "fileheader.update_last_modified_author_flags": "@Last Modified Author:",
     "fileheader.other_config": {
         "name": "jankincai",
     },
@@ -242,7 +251,7 @@ Custom Header template ``template/header/Python.tmpl``:
     "fileheader.custom_template_path": "xxx/template/",
 
     # set ssh, https://jdblischak.github.io/2014-09-18-chicago/novice/git/05-sshkeys.html
-    # "fileheader.remote": "git@github.com:caizhengxin/vscodefileheader.git"
+    # "fileheader.remote": "git@github.com:caizhengxin/fileheader-template.git"
 
     "fileheader.remote": "https://github.com/caizhengxin/fileheader-template.git"
 }

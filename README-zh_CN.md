@@ -33,6 +33,15 @@ or
 * [支持vscode变量](https://code.visualstudio.com/docs/editor/variables-reference)
 * 支持远程同步模板(需要安装git)
 
+## 命令
+
+通过`ctrl + shift + p`调出vscode命令行界面，然后输入`File Header`, 可以看到如下命令：
+
+- `File Header: Add header comment`: 很少使用，如果`ctrl+s`被禁用, 才会使用该命令。
+- `File Header: Crate template`: 必须设置自定义模板路径，才能创建新的模板。
+- `File Header: Open template`: 必须处于某个文件下，才能打开对应的模板文件进行修改，通常情况下不建议直接修改默认模板文件。
+- `File Header: Sync template`: 必须设置git远程地址，进行模板同步(git clone xxx)。
+
 ## 例子
 
 ![example](./images/example.gif)
@@ -176,6 +185,9 @@ if __name__ == "__main__":
 
 ```conf
 # @Name: {{name}}
+# @Time: {{last_modified_time}}
+# @Last Modified Author: {{name}}
+# @Last Modified Time: {{last_modified_time}}
 ```
 
 自定义模板body ``template/body/JKC.tmpl``:
@@ -188,6 +200,10 @@ if __name__ == "__main__":
 ```python
 {
     "fileheader.is_header_exists": "@Name:", # 用于识别头部，避免重复插入
+    # 用于识别更新最后修改作者标志
+    "fileheader.update_last_modified_time_flags": "@Last Modified Time:",
+    # 用于识别更新最后修改时间标志
+    "fileheader.update_last_modified_author_flags": "@Last Modified Author:",
     "fileheader.other_config": {
         "name": "jankincai",
     },
@@ -227,10 +243,28 @@ https://code.visualstudio.com/docs/editor/variables-reference
     "fileheader.custom_template_path": "xxx/template/",
 
     # 设置 SSH https://jdblischak.github.io/2014-09-18-chicago/novice/git/05-sshkeys.html
-    # "fileheader.remote": "git@github.com:caizhengxin/vscodefileheader.git"
+    # "fileheader.remote": "git@github.com:caizhengxin/fileheader-template.git"
 
-    "fileheader.remote": "https://github.com/caizhengxin/vscodefileheader.git"
+    "fileheader.remote": "https://github.com/caizhengxin/fileheader-template.git"
 }
+```
+
+## 开发者
+
+```bash
+$ git clone https://github.com/caizhengxin/vscodefileheader.git
+$ code vscodefileheader
+$ f5 # Enter Developer or Debug mode
+```
+
+## 发布安装包
+
+```bash
+# node_modules目录不能被.vscodeignore过滤.
+$ sudo npm i vsce -g
+$ vsce login jankincai
+$ vsce package
+$ vsce publish
 ```
 
 [marketplace]: https://marketplace.visualstudio.com/items?itemName=jankincai.vscodefileheader#review-details
