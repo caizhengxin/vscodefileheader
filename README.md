@@ -259,8 +259,10 @@ $ f5 # Enter Developer or Debug mode
 ## PUblish package
 
 ```bash
+# node_modules cannot be ignored by .vscodeignore.
 $ sudo npm i vsce -g
 $ vsce login jankincai
+$ vsce package
 $ vsce publish
 ```
 
