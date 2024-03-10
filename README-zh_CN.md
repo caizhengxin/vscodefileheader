@@ -8,6 +8,7 @@
 
 * 使用 [cookiecutter-vscode](https://github.com/caizhengxin/cookiecutter-vscode)创建项目
 * [自定义模板](https://github.com/caizhengxin/fileheader-template)
+  * 详细模板定义，请参考[art-template](https://aui.github.io/art-template/docs/)
 
 ## 安装
 

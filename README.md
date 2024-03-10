@@ -10,6 +10,7 @@ Feel good friends please give a star ~
 
 * Usage [cookiecutter-vscode](https://github.com/caizhengxin/cookiecutter-vscode) create project.
 * [Custom fileheader Extension template](https://github.com/caizhengxin/fileheader-template)
+  * For detailed template definitions, please refer to [art-template](https://aui.github.io/art-template/docs/)
 
 ## Install
 
