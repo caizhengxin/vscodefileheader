@@ -2,7 +2,7 @@
  * @Author: JanKinCai
  * @Date:   2020-01-03 22:02:02
  * @Last Modified by:   JanKinCai
- * @Last Modified time: 2021-04-24 23:33:13
+ * @Last Modified time: 2024-03-10 10:57:19
  */
 
 // The module 'vscode' contains the VS Code extensibility API
@@ -109,7 +109,7 @@ export function activate(context: vscode.ExtensionContext) {
 	command.syncTemplateCommand(getConfig(), file_suffix_mapping);
 
 	let disposable = vscode.commands.registerCommand('extension.fileheader', () => {
-		command.updateTemplateCommand(getConfig, file_suffix_mapping);
+		command.updateTemplateCommand(getConfig(), file_suffix_mapping);
 	});
 	context.subscriptions.push(disposable);
 
